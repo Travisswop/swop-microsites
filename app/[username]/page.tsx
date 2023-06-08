@@ -1,0 +1,143 @@
+import Image from 'next/image';
+import SocialSmall from '@/components/socialSmall';
+import SocialLarge from '@/components/socialLarge';
+import InfoBar from '@/components/infoBar';
+import PaymentBar from '@/components/paymentBar';
+import Contact from '@/components/contact';
+import Footer from '@/components/footer';
+import { socials } from '../lib/utils';
+import { Toaster } from '@/components/ui/toaster';
+
+async function getUserData(username: string) {
+  const res = await fetch(
+    `http://localhost:3000/api/user?username=${username}`
+  );
+  const data = await res.json();
+  return data;
+}
+export default async function PublicProfile({
+  params: { username },
+}: {
+  params: { username: string };
+}) {
+  const { data, error } = await getUserData(username);
+  if (error) {
+    return <div>failed to load</div>;
+  }
+  if (!data) {
+    return <div>loading...</div>;
+  }
+  const {
+    name,
+    bio,
+    profilePic,
+    backgroundImg,
+    info,
+    gatedAccess,
+    direct,
+    parentId,
+  } = data.data;
+
+  return (
+    <>
+      <main className="flex min-h-screen flex-col items-center mx-2 sm:mx-0">
+        <div className="relative w-full h-56 sm:h-64 mt-2">
+          <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg">
+            <Image
+              className="object-fill w-full h-40 sm:h-48 rounded-md"
+              src="/2.webp"
+              alt="Next.js Logo"
+              width={420}
+              height={200}
+              priority
+            />
+          </div>
+          <div className="absolute top-4 left-4 cursor-pointer">
+            <Image
+              className="object-fill w-6 h-6 sm:w-8 sm:h-8"
+              src="/connect.png"
+              alt="Connect"
+              width={30}
+              height={30}
+            />
+          </div>
+          <div className="absolute top-4 right-4 cursor-pointer">
+            <Image
+              className="object-fill w-6 h-6 sm:w-8 sm:h-8"
+              src="/notification.png"
+              alt="Notification"
+              width={30}
+              height={30}
+            />
+          </div>
+          <div className="absolute flex items-center justify-center transition-all w-28 h-28 bottom-0 left-0 right-0 mx-auto">
+            <div className="border-4 rounded-full border-white shadow-lg">
+              <Image
+                className="object-fill w-full h-24 sm:h-full rounded-full"
+                src="/rakib.webp"
+                alt="Next.js Logo"
+                width={120}
+                height={120}
+                priority
+              />
+            </div>
+          </div>
+        </div>
+        <div className="my-4">
+          <h1 className="text-2xl sm:text-3xl font-bold text-center">
+            {name}
+          </h1>
+          <p className="text-sm sm:text-md text-center">{bio}</p>
+        </div>
+        <div className="flex flex-row flex-wrap justify-evenly gap-4">
+          {info?.socialTop &&
+            info.socialTop.map((social: any) => (
+              <SocialSmall
+                key={social.name}
+                data={social}
+                socialType="socialTop"
+                parentId={parentId}
+              />
+            ))}
+        </div>
+        <div className="flex flex-row flex-wrap justify-evenly gap-4 my-8">
+          {socials.map((social) => (
+            <SocialLarge
+              key={social.name}
+              name={social.name}
+              url={social.url}
+              icon={social.icon}
+            />
+          ))}
+        </div>
+        <div className="w-full my-2">
+          <InfoBar
+            name="Twitter"
+            url="https://twitter.com/rakibul_islam_"
+            icon="/images/icon_small/Twitter.svg"
+          />
+        </div>
+        <div className="w-full my-2 bg-slate-300 p-3 rounded-[28px]">
+          <PaymentBar
+            name="Twitter"
+            url="https://twitter.com/rakibul_islam_"
+            icon="/images/icon_small/Twitter.svg"
+            desc="Buy me a coffee"
+            price="5"
+          />
+        </div>
+        <div className="w-full my-2 bg-slate-300 p-3 rounded-[28px]">
+          <Contact
+            name="Rakibul Islam"
+            url="https://twitter.com/rakibul_islam_"
+            phone="+880 1234567890"
+          />
+        </div>
+        <div>
+          <Footer brandIcon="/brand-icon.svg" />
+        </div>
+      </main>
+      <Toaster />
+    </>
+  );
+}

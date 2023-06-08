@@ -7,20 +7,48 @@ import Contact from '@/components/contact';
 import Footer from '@/components/footer';
 import { socials } from '../lib/utils';
 import { Toaster } from '@/components/ui/toaster';
+import { Metadata } from 'next';
+import { CardSkeleton } from '@/components/card-skeleton';
+
+const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+
+const wait = (ms:number) => new Promise((resolve) => setTimeout(resolve, ms))
+interface PageProps {
+  params: {
+    username: string
+  }
+}
 
 async function getUserData(username: string) {
   const res = await fetch(
-    `http://localhost:3000/api/user?username=${username}`
+    `${APP_URL}/api/user?username=${username}`,{
+      next: {revalidate: 10}
+    }
   );
   const data = await res.json();
+
   return data;
 }
-export default async function PublicProfile({
-  params: { username },
-}: {
-  params: { username: string };
-}) {
-  const { data, error } = await getUserData(username);
+
+type User = {
+  data: any
+}
+
+// export async function generateMetadata ({params}: PageProps): Promise<Metadata>{
+ 
+//   const res = await fetch(`${APP_URL}/api/user?username=${params.username}`)
+//   const data = (await res.json()) as User
+
+//   const {name, bio, } = data.data;
+
+//   return {
+//     title: name,
+//     description: bio,
+//   }
+// }
+export default async function PublicProfile({params}: PageProps) {
+  await wait(5000)
+  const { data, error } = await getUserData(params.username);
   if (error) {
     return <div>failed to load</div>;
   }
@@ -36,7 +64,7 @@ export default async function PublicProfile({
     gatedAccess,
     direct,
     parentId,
-  } = data.data;
+  } = data;
 
   return (
     <>
@@ -45,7 +73,7 @@ export default async function PublicProfile({
           <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg">
             <Image
               className="object-fill w-full h-40 sm:h-48 rounded-md"
-              src="/2.webp"
+              src="/swop-cover.webp"
               alt="Next.js Logo"
               width={420}
               height={200}

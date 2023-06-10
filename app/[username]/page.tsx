@@ -1,28 +1,32 @@
 import Image from 'next/image';
+import vCard from 'vcards-js';
+import { saveAs } from 'file-saver';
 import SocialSmall from '@/components/socialSmall';
 import SocialLarge from '@/components/socialLarge';
 import InfoBar from '@/components/infoBar';
 import PaymentBar from '@/components/paymentBar';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
-import { socials } from '../lib/utils';
 import { Toaster } from '@/components/ui/toaster';
 import { Metadata } from 'next';
 import { CardSkeleton } from '@/components/card-skeleton';
+import { Fragment } from 'react';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
-const wait = (ms:number) => new Promise((resolve) => setTimeout(resolve, ms))
+const wait = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 interface PageProps {
   params: {
-    username: string
-  }
+    username: string;
+  };
 }
 
 async function getUserData(username: string) {
   const res = await fetch(
-    `${APP_URL}/api/user?username=${username}`,{
-      next: {revalidate: 10}
+    `${APP_URL}/api/user?username=${username}`,
+    {
+      next: { revalidate: 60 },
     }
   );
   const data = await res.json();
@@ -31,11 +35,11 @@ async function getUserData(username: string) {
 }
 
 type User = {
-  data: any
-}
+  data: any;
+};
 
 // export async function generateMetadata ({params}: PageProps): Promise<Metadata>{
- 
+
 //   const res = await fetch(`${APP_URL}/api/user?username=${params.username}`)
 //   const data = (await res.json()) as User
 
@@ -46,8 +50,9 @@ type User = {
 //     description: bio,
 //   }
 // }
-export default async function PublicProfile({params}: PageProps) {
-  await wait(5000)
+
+export default async function PublicProfile({ params }: PageProps) {
+  await wait(1000);
   const { data, error } = await getUserData(params.username);
   if (error) {
     return <div>failed to load</div>;
@@ -55,6 +60,7 @@ export default async function PublicProfile({params}: PageProps) {
   if (!data) {
     return <div>loading...</div>;
   }
+
   const {
     name,
     bio,
@@ -65,6 +71,7 @@ export default async function PublicProfile({params}: PageProps) {
     direct,
     parentId,
   } = data;
+  // console.log(info);
 
   return (
     <>
@@ -129,37 +136,48 @@ export default async function PublicProfile({params}: PageProps) {
             ))}
         </div>
         <div className="flex flex-row flex-wrap justify-evenly gap-4 my-8">
-          {socials.map((social) => (
-            <SocialLarge
-              key={social.name}
-              name={social.name}
-              url={social.url}
-              icon={social.icon}
-            />
-          ))}
+          {info?.socialLarge &&
+            info.socialLarge.map((social: any) => (
+              <SocialLarge
+                key={social.name}
+                data={social}
+                socialType="socialLarge"
+                parentId={parentId}
+              />
+            ))}
         </div>
         <div className="w-full my-2">
-          <InfoBar
-            name="Twitter"
-            url="https://twitter.com/rakibul_islam_"
-            icon="/images/icon_small/Twitter.svg"
-          />
+          {info?.infoBar &&
+            info.infoBar.map((social: any) => (
+              <InfoBar
+                key={social._id}
+                data={social}
+                socialType="infoBar"
+                parentId={parentId}
+              />
+            ))}
         </div>
         <div className="w-full my-2 bg-slate-300 p-3 rounded-[28px]">
-          <PaymentBar
-            name="Twitter"
-            url="https://twitter.com/rakibul_islam_"
-            icon="/images/icon_small/Twitter.svg"
-            desc="Buy me a coffee"
-            price="5"
-          />
+          {info?.product &&
+            info.product.map((social: any) => (
+              <PaymentBar
+                key={social._id}
+                data={social}
+                socialType="product"
+                parentId={parentId}
+              />
+            ))}
         </div>
         <div className="w-full my-2 bg-slate-300 p-3 rounded-[28px]">
-          <Contact
-            name="Rakibul Islam"
-            url="https://twitter.com/rakibul_islam_"
-            phone="+880 1234567890"
-          />
+          {info?.contact &&
+            info.contact.map((social: any) => (
+              <Contact
+                key={social._id}
+                data={social}
+                socialType="contact"
+                parentId={parentId}
+              />
+            ))}
         </div>
         <div>
           <Footer brandIcon="/brand-icon.svg" />

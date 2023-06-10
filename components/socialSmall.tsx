@@ -32,35 +32,33 @@ const SocialSmall: FC<Props> = ({ data, socialType, parentId }) => {
   } = data;
 
   const openlink = async () => {
-    // try {
-    //   await fetch('https://app.apiswop.co/web/updateCount', {
-    //     method: 'POST',
-    //     headers: {
-    //       Accept: 'application/json',
-    //       'Content-Type': 'application/json',
-    //     },
-    //     body: JSON.stringify({
-    //       socialType,
-    //       socialId: _id,
-    //       parentId,
-    //     }),
-    //   });
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      await fetch('https://app.apiswop.co/web/updateCount', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          socialType,
+          socialId: _id,
+          parentId,
+        }),
+      });
+    } catch (err) {
+      console.log(err);
+    }
 
     switch (group) {
       case 'social':
         if (name === 'YouTube') {
-          return window.open(`${url}`, '_self');
+          return window.open(value, '_self');
         }
         if (name === 'Snapchat') {
           return window.open(`${url}/add/${value}`, '_self');
         }
-        // return window.open(`${url}${value}`, '_self');
-        toast({
-          title: 'Copied to clipboard',
-        });
+        return window.open(`${url}${value}`, '_self');
+
         break;
       case 'contact':
         if (name === 'WhatsApp') {
@@ -89,6 +87,12 @@ const SocialSmall: FC<Props> = ({ data, socialType, parentId }) => {
           return window.open(`${url}${value}/0`, '_self');
         }
         return window.open(value, '_self');
+        break;
+      case 'crypto':
+        navigator.clipboard.writeText(value);
+        toast({
+          title: 'Copied to clipboard',
+        });
         break;
       case 'more':
         return window.open(value, '_self');

@@ -1,6 +1,5 @@
 import Image from 'next/image';
-import vCard from 'vcards-js';
-import { saveAs } from 'file-saver';
+
 import SocialSmall from '@/components/socialSmall';
 import SocialLarge from '@/components/socialLarge';
 import InfoBar from '@/components/infoBar';
@@ -9,8 +8,6 @@ import Contact from '@/components/contact';
 import Footer from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { Metadata } from 'next';
-import { CardSkeleton } from '@/components/card-skeleton';
-import { Fragment } from 'react';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -38,18 +35,18 @@ type User = {
   data: any;
 };
 
-// export async function generateMetadata ({params}: PageProps): Promise<Metadata>{
+export async function generateMetadata ({params}: PageProps): Promise<Metadata>{
 
-//   const res = await fetch(`${APP_URL}/api/user?username=${params.username}`)
-//   const data = (await res.json()) as User
+  const res = await fetch(`${APP_URL}/api/user?username=${params.username}`)
+  const data = (await res.json()) as User
 
-//   const {name, bio, } = data.data;
+  const {name, bio, } = data.data;
 
-//   return {
-//     title: name,
-//     description: bio,
-//   }
-// }
+  return {
+    title: name,
+    description: bio,
+  }
+}
 
 export default async function PublicProfile({ params }: PageProps) {
   await wait(1000);

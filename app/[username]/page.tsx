@@ -82,7 +82,8 @@ export async function generateMetadata({
 }
 
 export default async function PublicProfile({ params }: PageProps) {
-  await wait(1000);
+  // await wait(1000);
+  console.log('public url', APP_URL);
   const { data, error } = await getUserData(params.username);
   if (error) {
     return <div>failed to load</div>;

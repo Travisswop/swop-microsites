@@ -51,7 +51,7 @@ export async function GET(req: Request) {
             <div tw="flex w-full mx-auto">
               <img
                 src={values.avatar}
-                tw="w-[400px] h-[400px] rounded-md"
+                tw="w-[250px] h-[250px] rounded-md"
                 style={{
                   objectFit: 'cover',
                   objectPosition: 'center',

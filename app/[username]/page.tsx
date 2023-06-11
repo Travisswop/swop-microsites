@@ -52,8 +52,13 @@ export async function generateMetadata({
 
   const ogUrl = new URL(`${url}/api/og`);
 
-  ogUrl.searchParams.set('heading', data.data.name);
-  ogUrl.searchParams.set('type', siteConfig.name);
+  const shortcutIcon = data.data.profilePic.includes('https')
+    ? data.data.profilePic
+    : `/images/avatar/${data.data.profilePic}.png`;
+
+  ogUrl.searchParams.set('name', data.data.name);
+  ogUrl.searchParams.set('bio', siteConfig.name);
+  ogUrl.searchParams.set('avatar', shortcutIcon);
   ogUrl.searchParams.set('mode', 'light');
 
   return {
@@ -78,6 +83,11 @@ export async function generateMetadata({
       title: data.data.name,
       description: data.data.bio,
       images: [ogUrl.toString()],
+    },
+    icons: {
+      icon: shortcutIcon,
+      shortcut: shortcutIcon,
+      apple: shortcutIcon,
     },
   };
 }

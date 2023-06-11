@@ -10,6 +10,7 @@ export const metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+
   keywords: [
     'Swop',
     'Swop digital buisness card',

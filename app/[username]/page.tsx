@@ -44,13 +44,14 @@ export async function generateMetadata({
   );
   const data = (await res.json()) as User;
 
-  if (!data) {
+  if (!data.data) {
     return {};
   }
 
   const url = process.env.NEXT_PUBLIC_APP_URL;
 
   const ogUrl = new URL(`${url}/api/og`);
+
   ogUrl.searchParams.set('heading', data.data.name);
   ogUrl.searchParams.set('type', siteConfig.name);
   ogUrl.searchParams.set('mode', 'light');
@@ -61,8 +62,8 @@ export async function generateMetadata({
     openGraph: {
       title: data.data.name,
       description: data.data.bio,
-      type: 'article',
-      url: absoluteUrl(`/sp/${data.data.username}`),
+      type: 'website',
+      url: absoluteUrl(`/${data.data.username}`),
       images: [
         {
           url: ogUrl.toString(),

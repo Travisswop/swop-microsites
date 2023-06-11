@@ -10,7 +10,7 @@ const interRegular = fetch(
 
 const interBold = fetch(
   new URL(
-    '../../../assets/fonts/CalSans-SemiBold.ttf',
+    '../../../assets/fonts/CalSans-SemiBold.woff',
     import.meta.url
   )
 ).then((res) => res.arrayBuffer());
@@ -18,6 +18,7 @@ const interBold = fetch(
 export async function GET(req: Request) {
   try {
     const fontRegular = await interRegular;
+    console.log('fontRegular', fontRegular);
     const fontBold = await interBold;
 
     const url = new URL(req.url);

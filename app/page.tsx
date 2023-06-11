@@ -4,34 +4,64 @@ import SocialLarge from '@/components/socialLarge';
 import Footer from '@/components/footer';
 const socials = [
   {
+    _id: 'Facebook',
     name: 'Facebook',
     url: 'https://www.facebook.com/swopmeapp',
-    icon: '/images/social_icon/Facebook.svg',
+    micrositeId: '',
+    value: '',
+    iconName: 'Facebook',
+    iconPath: '',
+    group: '',
   },
   {
+    _id: 'Instagram',
     name: 'Instagram',
     url: 'https://www.instagram.com/swopme.app/',
-    icon: '/images/social_icon/Instagram.svg',
+    micrositeId: '',
+    value: '',
+    iconName: 'Instagram',
+    iconPath: '',
+    group: '',
   },
   {
+    _id: 'Youtube',
     name: 'Youtube',
     url: 'https://www.youtube.com/channel/UCohnJ2WcoSIEaLbk9jqqoeg',
-    icon: '/images/social_icon/Youtube.svg',
+    micrositeId: '',
+    value: '',
+    iconName: 'Youtube',
+    iconPath: '',
+    group: '',
   },
   {
+    _id: 'Twitter',
     name: 'Twitter',
     url: 'https://twitter.com/swop0x',
-    icon: '/images/social_icon/Twitter.svg',
+    micrositeId: '',
+    value: '',
+    iconName: 'Twitter',
+    iconPath: '',
+    group: '',
   },
   {
+    _id: 'Linkedin',
     name: 'Linkedin',
     url: '#',
-    icon: '/images/social_icon/Linkedin.svg',
+    micrositeId: '',
+    value: '',
+    iconName: 'Linkedin',
+    iconPath: '',
+    group: '',
   },
   {
+    _id: 'Tiktok',
     name: 'Tiktok',
     url: '#',
-    icon: '/images/social_icon/Tiktok.svg',
+    micrositeId: '',
+    value: '',
+    iconName: 'Tiktok',
+    iconPath: '',
+    group: '',
   },
 ];
 export default function Home() {
@@ -69,9 +99,9 @@ export default function Home() {
         {socials.map((social) => (
           <SocialLarge
             key={social.name}
-            name={social.name}
-            url={social.url}
-            icon={social.icon}
+            data={social}
+            socialType="socialLarge"
+            parentId=""
           />
         ))}
       </div>

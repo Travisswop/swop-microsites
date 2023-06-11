@@ -8,7 +8,8 @@ import Contact from '@/components/contact';
 import Footer from '@/components/footer';
 import { Toaster } from '@/components/ui/toaster';
 import { Metadata } from 'next';
-
+import { siteConfig } from '@/config/site';
+import { absoluteUrl } from '@/lib/utils';
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 const wait = (ms: number) =>
@@ -35,17 +36,49 @@ type User = {
   data: any;
 };
 
-export async function generateMetadata ({params}: PageProps): Promise<Metadata>{
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const res = await fetch(
+    `${APP_URL}/api/user?username=${params.username}`
+  );
+  const data = (await res.json()) as User;
 
-  const res = await fetch(`${APP_URL}/api/user?username=${params.username}`)
-  const data = (await res.json()) as User
+  if (!data) {
+    return {};
+  }
 
-  const {name, bio, } = data.data;
+  const url = process.env.NEXT_PUBLIC_APP_URL;
+
+  const ogUrl = new URL(`${url}/api/og`);
+  ogUrl.searchParams.set('heading', data.data.name);
+  ogUrl.searchParams.set('type', siteConfig.name);
+  ogUrl.searchParams.set('mode', 'light');
 
   return {
-    title: name,
-    description: bio,
-  }
+    title: data.data.name,
+    description: data.data.bio,
+    openGraph: {
+      title: data.data.name,
+      description: data.data.bio,
+      type: 'article',
+      url: absoluteUrl(`/sp/${data.data.username}`),
+      images: [
+        {
+          url: ogUrl.toString(),
+          width: 1200,
+          height: 630,
+          alt: data.data.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: data.data.name,
+      description: data.data.bio,
+      images: [ogUrl.toString()],
+    },
+  };
 }
 
 export default async function PublicProfile({ params }: PageProps) {

@@ -50,40 +50,40 @@ export async function generateMetadata({
 
   const url = process.env.NEXT_PUBLIC_APP_URL;
 
-  const ogUrl = new URL(`${url}/api/og`);
+  // const ogUrl = new URL(`${url}/api/og`);
 
   const shortcutIcon = data.data.profilePic.includes('https')
     ? data.data.profilePic
     : `/images/avatar/${data.data.profilePic}.png`;
 
-  ogUrl.searchParams.set('name', data.data.name);
-  ogUrl.searchParams.set('bio', siteConfig.name);
-  ogUrl.searchParams.set('avatar', shortcutIcon);
-  ogUrl.searchParams.set('mode', 'light');
+  // ogUrl.searchParams.set('name', data.data.name);
+  // ogUrl.searchParams.set('bio', siteConfig.name);
+  // ogUrl.searchParams.set('avatar', shortcutIcon);
+  // ogUrl.searchParams.set('mode', 'light');
 
   return {
     title: data.data.name,
     description: data.data.bio,
-    openGraph: {
-      title: data.data.name,
-      description: data.data.bio,
-      type: 'website',
-      url: absoluteUrl(`/${data.data.username}`),
-      images: [
-        {
-          url: ogUrl.toString(),
-          width: 800,
-          height: 400,
-          alt: data.data.name,
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: data.data.name,
-      description: data.data.bio,
-      images: [ogUrl.toString()],
-    },
+    // openGraph: {
+    //   title: data.data.name,
+    //   description: data.data.bio,
+    //   type: 'website',
+    //   url: absoluteUrl(`/${data.data.username}`),
+    //   images: [
+    //     {
+    //       url: ogUrl.toString(),
+    //       width: 800,
+    //       height: 400,
+    //       alt: data.data.name,
+    //     },
+    //   ],
+    // },
+    // twitter: {
+    //   card: 'summary_large_image',
+    //   title: data.data.name,
+    //   description: data.data.bio,
+    //   images: [ogUrl.toString()],
+    // },
     icons: {
       icon: shortcutIcon,
       shortcut: shortcutIcon,

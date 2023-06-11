@@ -48,10 +48,10 @@ export async function GET(req: Request) {
           }}
         >
           <div tw="flex flex-col flex-1 py-10 mx-auto">
-            <div tw="flex">
+            <div tw="flex w-full mx-auto">
               <img
                 src={values.avatar}
-                tw="w-[100px] h-[100px] rounded-full"
+                tw="w-[400px] h-[400px] rounded-md"
                 style={{
                   objectFit: 'cover',
                   objectPosition: 'center',
@@ -59,11 +59,10 @@ export async function GET(req: Request) {
               />
             </div>
             <div
-              tw="flex leading-[1.1] text-[80px] font-bold"
+              tw="flex leading-[1.1] text-[50px] font-bold"
               style={{
                 fontFamily: 'Cal Sans',
                 fontWeight: 'bold',
-                marginLeft: '-3px',
                 fontSize,
               }}
             >

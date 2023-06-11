@@ -71,9 +71,9 @@ export async function generateMetadata({
       url: absoluteUrl(`/${data.data.username}`),
       images: [
         {
-          url: ogUrl.toString(),
-          width: 1200,
-          height: 630,
+          url: shortcutIcon,
+          width: 400,
+          height: 400,
           alt: data.data.name,
         },
       ],

@@ -84,7 +84,6 @@ export async function generateMetadata({
 
 export default async function PublicProfile({ params }: PageProps) {
   // await wait(1000);
-  console.log('public url', APP_URL);
   const { data, error } = await getUserData(params.username);
   if (error) {
     return <div>failed to load</div>;
@@ -112,8 +111,12 @@ export default async function PublicProfile({ params }: PageProps) {
           <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg">
             <Image
               className="object-fill w-full h-40 sm:h-48 rounded-md"
-              src="/swop-cover.webp"
-              alt="Next.js Logo"
+              src={
+                backgroundImg.includes('https')
+                  ? backgroundImg
+                  : `/images/coverphoto/${backgroundImg}.jpg`
+              }
+              alt={name}
               width={420}
               height={200}
               priority
@@ -141,7 +144,11 @@ export default async function PublicProfile({ params }: PageProps) {
             <div className="border-4 rounded-full border-white shadow-lg">
               <Image
                 className="object-fill w-full h-24 sm:h-full rounded-full"
-                src="/rakib.webp"
+                src={
+                  profilePic.includes('https')
+                    ? profilePic
+                    : `/images/avatar/${profilePic}.png`
+                }
                 alt="Next.js Logo"
                 width={120}
                 height={120}

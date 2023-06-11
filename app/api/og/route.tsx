@@ -47,7 +47,17 @@ export async function GET(req: Request) {
                 : 'white',
           }}
         >
-          <div tw="flex flex-col flex-1 py-10">
+          <div tw="flex flex-col flex-1 py-10 mx-auto">
+            <div tw="flex">
+              <img
+                src={values.avatar}
+                tw="w-[100px] h-[100px] rounded-full"
+                style={{
+                  objectFit: 'cover',
+                  objectPosition: 'center',
+                }}
+              />
+            </div>
             <div
               tw="flex leading-[1.1] text-[80px] font-bold"
               style={{
@@ -58,16 +68,6 @@ export async function GET(req: Request) {
               }}
             >
               {values.name}
-            </div>
-            <div>
-              <img
-                src={values.avatar}
-                tw="w-[100px] h-[100px] rounded-full"
-                style={{
-                  objectFit: 'cover',
-                  objectPosition: 'center',
-                }}
-              />
             </div>
           </div>
         </div>

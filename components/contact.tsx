@@ -2,6 +2,7 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import { downloadVCard } from '../lib/vCardUtils';
+import { motion } from 'framer-motion';
 interface Props {
   data: {
     _id: string;
@@ -14,7 +15,14 @@ interface Props {
   };
   socialType: string;
   parentId: string;
+  number: number;
 }
+
+const variants = {
+  hidden: { opacity: 0, x: 0, y: 25 },
+  enter: { opacity: 1, x: 0, y: 0 },
+  exit: { opacity: 0, x: -0, y: 25 },
+};
 
 const download = async (data: any) => {
   const vCard = await downloadVCard(data);
@@ -29,7 +37,12 @@ const download = async (data: any) => {
   document.body.removeChild(a);
 };
 
-const Contact: FC<Props> = ({ data, socialType, parentId }) => {
+const Contact: FC<Props> = ({
+  data,
+  socialType,
+  parentId,
+  number,
+}) => {
   const {
     _id,
     micrositeId,
@@ -39,27 +52,45 @@ const Contact: FC<Props> = ({ data, socialType, parentId }) => {
     address,
     websiteUrl,
   } = data;
-
+  const delay = number + 1 * 0.3;
   return (
-    <div
-      onClick={() => download(data)}
-      className="flex flex-row gap-2 items-center cursor-pointer"
+    <motion.div
+      initial="hidden"
+      animate="enter"
+      exit="exit"
+      variants={variants}
+      transition={{
+        duration: 0.4,
+        delay,
+        type: 'easeInOut',
+      }}
     >
-      <div>
-        <Image
-          className="object-fill w-full h-20 rounded-[24px] shadow-lg"
-          src="/contacts-ios.svg"
-          alt={name}
-          width={80}
-          height={80}
-          priority
-        />
-      </div>
-      <div>
-        <p className="text-md font-semibold">{name}</p>
-        <p className="text-xs">{mobileNo}</p>
-      </div>
-    </div>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        transition={{
+          type: 'spring',
+          stiffness: 400,
+          damping: 10,
+        }}
+        onClick={() => download(data)}
+        className="flex flex-row gap-2 items-center cursor-pointer bg-slate-300 p-3 rounded-[28px]"
+      >
+        <div>
+          <Image
+            className="object-fill w-full h-20 rounded-[24px] shadow-lg"
+            src="/contacts-ios.svg"
+            alt={name}
+            width={80}
+            height={80}
+            priority
+          />
+        </div>
+        <div>
+          <p className="text-md font-semibold">{name}</p>
+          <p className="text-xs">{mobileNo}</p>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

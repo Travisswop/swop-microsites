@@ -5,7 +5,12 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ['res.cloudinary.com', 'ipfs.io', '104.248.234.73'],
+    domains: [
+      'res.cloudinary.com',
+      'ipfs.io',
+      '104.248.234.73',
+      'nft-cdn.alchemy.com',
+    ],
   },
 };
 

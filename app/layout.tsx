@@ -22,20 +22,6 @@ export const metadata = {
     { media: '(prefers-color-scheme: light)', color: 'white' },
     { media: '(prefers-color-scheme: dark)', color: 'black' },
   ],
-  openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: [`${siteConfig.url}/og.jpg`],
-  },
   icons: {
     icon: '/favicon.ico',
     shortcut: '/favicon-16x16.png',
@@ -58,7 +44,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          'max-w-md min-h-screen mx-auto bg-background font-sans antialiased',
+          'min-h-screen mx-auto bg-background font-sans antialiased',
           fontSans.variable
         )}
       >

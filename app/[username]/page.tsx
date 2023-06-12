@@ -1,15 +1,29 @@
 import Image from 'next/image';
-
+import Header from '@/components/header';
+import Bio from '@/components/bio';
 import SocialSmall from '@/components/socialSmall';
 import SocialLarge from '@/components/socialLarge';
 import InfoBar from '@/components/infoBar';
 import PaymentBar from '@/components/paymentBar';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
+import GatedAccess from '@/components/nftGated';
 import { Toaster } from '@/components/ui/toaster';
 import { Metadata } from 'next';
 import { siteConfig } from '@/config/site';
 import { absoluteUrl } from '@/lib/utils';
+import { motion, Variants } from 'framer-motion';
+import Video from '@/components/video';
+import Connect from '@/components/connect';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+} from '@/components/ui/dialog';
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 const wait = (ms: number) =>
@@ -24,7 +38,7 @@ async function getUserData(username: string) {
   const res = await fetch(
     `${APP_URL}/api/user?username=${username}`,
     {
-      next: { revalidate: 60 },
+      next: { revalidate: 1 },
     }
   );
   const data = await res.json();
@@ -92,8 +106,14 @@ export async function generateMetadata({
   };
 }
 
+const variants = {
+  hidden: { opacity: 0, x: 0, y: 25 },
+  enter: { opacity: 1, x: 0, y: 0 },
+  exit: { opacity: 0, x: -0, y: 25 },
+};
+
 export default async function PublicProfile({ params }: PageProps) {
-  // await wait(1000);
+  // await wait(10000);
   const { data, error } = await getUserData(params.username);
   if (error) {
     return <div>failed to load</div>;
@@ -111,72 +131,27 @@ export default async function PublicProfile({ params }: PageProps) {
     gatedAccess,
     direct,
     parentId,
+    gatedInfo,
   } = data;
-  // console.log(info);
+
+  console.log(data.gatedInfo);
 
   return (
     <>
-      <main className="flex min-h-screen flex-col items-center mx-2 sm:mx-0">
-        <div className="relative w-full h-56 sm:h-64 mt-2">
-          <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg">
-            <Image
-              className="object-fill w-full h-40 sm:h-48 rounded-md"
-              src={
-                backgroundImg.includes('https')
-                  ? backgroundImg
-                  : `/images/coverphoto/${backgroundImg}.jpg`
-              }
-              alt={name}
-              width={420}
-              height={200}
-              priority
-            />
-          </div>
-          <div className="absolute top-4 left-4 cursor-pointer">
-            <Image
-              className="object-fill w-6 h-6 sm:w-8 sm:h-8"
-              src="/connect.png"
-              alt="Connect"
-              width={30}
-              height={30}
-            />
-          </div>
-          <div className="absolute top-4 right-4 cursor-pointer">
-            <Image
-              className="object-fill w-6 h-6 sm:w-8 sm:h-8"
-              src="/notification.png"
-              alt="Notification"
-              width={30}
-              height={30}
-            />
-          </div>
-          <div className="absolute flex items-center justify-center transition-all w-28 h-28 bottom-0 left-0 right-0 mx-auto">
-            <div className="border-4 rounded-full border-white shadow-lg">
-              <Image
-                className="object-fill w-full h-24 sm:h-full rounded-full"
-                src={
-                  profilePic.includes('https')
-                    ? profilePic
-                    : `/images/avatar/${profilePic}.png`
-                }
-                alt="Next.js Logo"
-                width={120}
-                height={120}
-                priority
-              />
-            </div>
-          </div>
-        </div>
+      <main className="flex max-w-md mx-auto min-h-screen flex-col items-center">
+        <Header
+          avatar={profilePic}
+          cover={backgroundImg}
+          name={name}
+        />
         <div className="my-4">
-          <h1 className="text-2xl sm:text-3xl font-bold text-center">
-            {name}
-          </h1>
-          <p className="text-sm sm:text-md text-center">{bio}</p>
+          <Bio name={name} bio={bio} />
         </div>
         <div className="flex flex-row flex-wrap justify-evenly gap-4">
           {info?.socialTop &&
-            info.socialTop.map((social: any) => (
+            info.socialTop.map((social: any, index: number) => (
               <SocialSmall
+                number={index}
                 key={social.name}
                 data={social}
                 socialType="socialTop"
@@ -184,10 +159,16 @@ export default async function PublicProfile({ params }: PageProps) {
               />
             ))}
         </div>
+        {info.videoUrl.length > 0 && (
+          <div className="flex mt-8 mx-5">
+            <Video link={info.videoUrl[0].videoUrl} />
+          </div>
+        )}
         <div className="flex flex-row flex-wrap justify-evenly gap-4 my-8">
           {info?.socialLarge &&
-            info.socialLarge.map((social: any) => (
+            info.socialLarge.map((social: any, index: number) => (
               <SocialLarge
+                number={index}
                 key={social.name}
                 data={social}
                 socialType="socialLarge"
@@ -197,8 +178,9 @@ export default async function PublicProfile({ params }: PageProps) {
         </div>
         <div className="w-full my-2">
           {info?.infoBar &&
-            info.infoBar.map((social: any) => (
+            info.infoBar.map((social: any, index: number) => (
               <InfoBar
+                number={index}
                 key={social._id}
                 data={social}
                 socialType="infoBar"
@@ -206,10 +188,11 @@ export default async function PublicProfile({ params }: PageProps) {
               />
             ))}
         </div>
-        <div className="w-full my-2 bg-slate-300 p-3 rounded-[28px]">
+        <div className="w-full my-2">
           {info?.product &&
-            info.product.map((social: any) => (
+            info.product.map((social: any, index: number) => (
               <PaymentBar
+                number={index}
                 key={social._id}
                 data={social}
                 socialType="product"
@@ -217,10 +200,11 @@ export default async function PublicProfile({ params }: PageProps) {
               />
             ))}
         </div>
-        <div className="w-full my-2 bg-slate-300 p-3 rounded-[28px]">
+        <div className="w-full my-2 ">
           {info?.contact &&
-            info.contact.map((social: any) => (
+            info.contact.map((social: any, index: number) => (
               <Contact
+                number={index}
                 key={social._id}
                 data={social}
                 socialType="contact"
@@ -233,6 +217,23 @@ export default async function PublicProfile({ params }: PageProps) {
         </div>
       </main>
       <Toaster />
+      {/* {wait(50000)} */}
+      <Dialog open={gatedAccess && gatedInfo.error === false}>
+        <DialogContent>
+          <GatedAccess
+            data={{
+              contractAddress: gatedInfo.contractAddress,
+              eventLink: gatedInfo.eventLink,
+              network: gatedInfo.network,
+              tokenId: gatedInfo.tokenId,
+              title: gatedInfo.title,
+              description: gatedInfo.description,
+              image: gatedInfo.image,
+              openseaLink: gatedInfo.openseaLink,
+            }}
+          />
+        </DialogContent>
+      </Dialog>
     </>
   );
 }

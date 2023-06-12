@@ -3,6 +3,8 @@ import { FC } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useToast } from '@/components/ui/use-toast';
+import { motion, Variants } from 'framer-motion';
+
 interface Props {
   data: {
     _id: string;
@@ -16,8 +18,21 @@ interface Props {
   };
   socialType: string;
   parentId: string;
+  number: number;
 }
-const SocialLarge: FC<Props> = ({ data, socialType, parentId }) => {
+
+const variants = {
+  hidden: { opacity: 0, x: 0, y: 25 },
+  enter: { opacity: 1, x: 0, y: 0 },
+  exit: { opacity: 0, x: -0, y: 25 },
+};
+
+const SocialLarge: FC<Props> = ({
+  data,
+  socialType,
+  parentId,
+  number,
+}) => {
   const { toast } = useToast();
   const {
     _id,
@@ -101,12 +116,30 @@ const SocialLarge: FC<Props> = ({ data, socialType, parentId }) => {
         break;
     }
   };
+
+  const delay = number * 0.1;
   return (
-    <div
+    <motion.div
+      initial="hidden"
+      animate="enter"
+      exit="exit"
+      variants={variants}
+      transition={{
+        duration: 0.4,
+        delay,
+        type: 'easeInOut',
+      }}
       onClick={openlink}
-      className="flex flex-col gap-2 items-center justify-between cursor-pointer"
+      className="flex flex-col gap-2 items-center justify-between cursor-pointer "
     >
-      <div>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        transition={{
+          type: 'spring',
+          stiffness: 400,
+          damping: 10,
+        }}
+      >
         <Image
           className="object-fill w-full h-24 sm:h-28 rounded-[28px]"
           src={
@@ -119,9 +152,9 @@ const SocialLarge: FC<Props> = ({ data, socialType, parentId }) => {
           height={120}
           priority
         />
-      </div>
+      </motion.div>
       <p className="text-xs">{name}</p>
-    </div>
+    </motion.div>
   );
 };
 

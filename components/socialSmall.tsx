@@ -3,6 +3,7 @@ import { FC } from 'react';
 import Image from 'next/image';
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
+import { motion, Variants } from 'framer-motion';
 interface Props {
   data: {
     _id: string;
@@ -16,9 +17,20 @@ interface Props {
   };
   socialType: string;
   parentId: string;
+  number: number;
 }
 
-const SocialSmall: FC<Props> = ({ data, socialType, parentId }) => {
+const variants = {
+  hidden: { opacity: 0, x: 0, y: 25 },
+  enter: { opacity: 1, x: 0, y: 0 },
+  exit: { opacity: 0, x: -0, y: 25 },
+};
+const SocialSmall: FC<Props> = ({
+  data,
+  socialType,
+  parentId,
+  number,
+}) => {
   const { toast } = useToast();
   const {
     _id,
@@ -103,27 +115,47 @@ const SocialSmall: FC<Props> = ({ data, socialType, parentId }) => {
     }
   };
 
+  const delay = number * 0.1;
+
   return (
-    <div
+    <motion.div
+      initial="hidden"
+      animate="enter"
+      exit="exit"
+      variants={variants}
+      transition={{
+        duration: 0.4,
+        delay,
+        type: 'easeInOut',
+      }}
       onClick={openlink}
-      className="flex flex-row gap-2 items-center justify-between bg-white  rounded-full px-5 py-2 sm:px-6 sm:py-2 shadow-xl cursor-pointer"
     >
-      <div>
-        <Image
-          className="object-fill w-full h-4 sm:h-5 rounded-md"
-          src={
-            iconPath
-              ? iconPath
-              : `/images/social_icon/${iconName}.svg`
-          }
-          alt={iconName}
-          width={20}
-          height={20}
-          priority
-        />
-      </div>
-      <p className="text-xs">{name}</p>
-    </div>
+      <motion.div
+        whileHover={{ scale: 1.05 }}
+        transition={{
+          type: 'spring',
+          stiffness: 400,
+          damping: 10,
+        }}
+        className="flex flex-row gap-2 items-center justify-between bg-white  rounded-full px-5 py-2 sm:px-6 sm:py-2 shadow-xl cursor-pointer "
+      >
+        <div>
+          <Image
+            className="object-fill w-full h-4 sm:h-5 rounded-md"
+            src={
+              iconPath
+                ? iconPath
+                : `/images/social_icon/${iconName}.svg`
+            }
+            alt={iconName}
+            width={20}
+            height={20}
+            priority
+          />
+        </div>
+        <p className="text-xs">{name}</p>
+      </motion.div>
+    </motion.div>
   );
 };
 

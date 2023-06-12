@@ -114,8 +114,9 @@ export default async function Home() {
         <p className="text-md text-center">#swop</p>
       </div>
       <div className="flex flex-row flex-wrap justify-evenly gap-4 my-8">
-        {socials.map((social) => (
+        {socials.map((social, index) => (
           <SocialLarge
+            number={index}
             key={social.name}
             data={social}
             socialType="socialLarge"

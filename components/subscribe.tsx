@@ -22,7 +22,7 @@ interface Props {
     parentId: string;
     micrositeId: string;
   };
-  handler: () => void;
+  handler: (arg: boolean) => void;
 }
 
 const Subscribe: FC<Props> = ({ data, handler }) => {

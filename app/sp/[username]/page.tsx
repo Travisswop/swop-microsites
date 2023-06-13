@@ -163,7 +163,7 @@ export default async function PublicProfile({ params }: PageProps) {
         </div>
       </main>
       <Toaster />
-      <Dialog open={gatedAccess && gatedInfo.error === false}>
+      {/* <Dialog open={gatedAccess && gatedInfo.error === false}>
         <DialogContent>
           <GatedAccess
             data={{
@@ -178,7 +178,7 @@ export default async function PublicProfile({ params }: PageProps) {
             }}
           />
         </DialogContent>
-      </Dialog>
+      </Dialog> */}
     </>
   );
 }

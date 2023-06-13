@@ -84,7 +84,7 @@ const InfoBar: FC<Props> = ({
           damping: 10,
         }}
         onClick={openlink}
-        className="flex flex-row gap-2 items-center cursor-pointer bg-slate-300 p-3 rounded-[28px]"
+        className="mx-2 flex flex-row gap-2 items-center cursor-pointer bg-slate-300 p-3 rounded-[28px]"
       >
         <div>
           <Image

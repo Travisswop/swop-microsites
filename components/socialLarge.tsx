@@ -130,7 +130,7 @@ const SocialLarge: FC<Props> = ({
         type: 'easeInOut',
       }}
       onClick={openlink}
-      className="flex flex-col gap-2 items-center justify-between cursor-pointer "
+      className="flex flex-col gap-3 items-center justify-between cursor-pointer"
     >
       <motion.div
         whileHover={{ scale: 1.05 }}
@@ -141,15 +141,15 @@ const SocialLarge: FC<Props> = ({
         }}
       >
         <Image
-          className="object-fill w-full h-24 sm:h-28 rounded-[28px]"
+          className="object-fill w-full h-24 sm:h-28 rounded-[30px] bg-transparent shadow-lg "
           src={
             iconPath
               ? iconPath
               : `/images/social_icon/${iconName}.svg`
           }
           alt={iconName}
-          width={120}
-          height={120}
+          width={130}
+          height={130}
           priority
         />
       </motion.div>

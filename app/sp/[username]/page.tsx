@@ -108,11 +108,11 @@ export default async function PublicProfile({ params }: PageProps) {
             ))}
         </div>
         {info.videoUrl.length > 0 && (
-          <div className="flex mt-8 mx-5">
+          <div className="flex mt-8 w-11/12">
             <Video link={info.videoUrl[0].videoUrl} />
           </div>
         )}
-        <div className="flex flex-row flex-wrap justify-evenly gap-4 my-8">
+        <div className="flex flex-row flex-wrap justify-evenly gap-10 my-8">
           {info?.socialLarge &&
             info.socialLarge.map((social: any, index: number) => (
               <SocialLarge
@@ -148,7 +148,7 @@ export default async function PublicProfile({ params }: PageProps) {
               />
             ))}
         </div>
-        <div className="w-full my-2 ">
+        <div className="w-full my-2">
           {info?.contact &&
             info.contact.map((social: any, index: number) => (
               <Contact

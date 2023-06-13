@@ -20,7 +20,7 @@ interface Props {
 
 const Header: FC<Props> = ({ avatar, cover, name }) => {
   return (
-    <div className="relative w-full h-56 sm:h-64 mt-2">
+    <div className="relative w-full h-60 sm:h-64 mt-2">
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -31,7 +31,7 @@ const Header: FC<Props> = ({ avatar, cover, name }) => {
       >
         <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg">
           <Image
-            className="object-fill w-full h-40 sm:h-48 rounded-md"
+            className="object-fill w-full h-44 sm:h-48 rounded-md"
             src={
               cover.includes('https')
                 ? cover
@@ -56,7 +56,7 @@ const Header: FC<Props> = ({ avatar, cover, name }) => {
           <Dialog>
             <DialogTrigger>
               <Image
-                className="object-fill w-6 h-6 sm:w-8 sm:h-8"
+                className="object-fill w-8 h-8"
                 src="/connect.png"
                 alt="Connect"
                 width={30}
@@ -96,7 +96,7 @@ const Header: FC<Props> = ({ avatar, cover, name }) => {
           <Dialog>
             <DialogTrigger>
               <Image
-                className="object-fill w-6 h-6 sm:w-8 sm:h-8"
+                className="object-fill w-8 h-8"
                 src="/notification.png"
                 alt="Notification"
                 width={30}

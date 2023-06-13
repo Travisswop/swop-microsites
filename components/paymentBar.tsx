@@ -78,7 +78,7 @@ const PaymentBar: FC<Props> = ({
           stiffness: 400,
           damping: 10,
         }}
-        className="flex justify-between items-center cursor-pointer bg-slate-300 p-3 rounded-[28px]"
+        className="mx-2 flex justify-between items-center cursor-pointer bg-slate-300 p-3 rounded-[28px]"
       >
         <div className="flex flex-row gap-2 items-center ">
           <div>

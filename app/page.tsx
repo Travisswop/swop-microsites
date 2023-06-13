@@ -65,26 +65,9 @@ const socials = [
   },
 ];
 
-async function getUserData(username: string) {
-  const res = await fetch(
-    `${APP_URL}/api/user?username=${username}`,
-    {
-      next: { revalidate: 60 },
-    }
-  );
-  const data = await res.json();
-
-  return data;
-}
-
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 export default async function Home() {
-  console.log('public url', APP_URL);
-  const { data, error } = await getUserData('rakib');
-  console.log('data', data);
-  console.log('error', error);
   return (
-    <main className="flex min-h-screen flex-col items-center mx-2 sm:mx-0">
+    <main className="flex max-w-md mx-auto min-h-screen flex-col items-center">
       <div className="relative w-full h-56 sm:h-64 mt-2">
         <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg">
           <Image

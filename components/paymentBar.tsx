@@ -92,8 +92,8 @@ const PaymentBar: FC<Props> = ({
             />
           </div>
           <div>
-            <p className="text-md font-semibold">{title}</p>
-            <p className="text-xs">{description}</p>
+            <div className="text-md font-semibold">{title}</div>
+            <div className="text-xs">{description}</div>
           </div>
         </div>
         <div>

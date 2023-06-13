@@ -86,8 +86,8 @@ const Contact: FC<Props> = ({
           />
         </div>
         <div>
-          <p className="text-md font-semibold">{name}</p>
-          <p className="text-xs">{mobileNo}</p>
+          <div className="text-md font-semibold">{name}</div>
+          <div className="text-xs">{mobileNo}</div>
         </div>
       </motion.div>
     </motion.div>

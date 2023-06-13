@@ -55,7 +55,7 @@ const Connect: FC<Props> = ({
       </div>
       <DialogHeader>
         <DialogTitle className="text-center">
-          Share your info to Connect with Rakibul Islam
+          Share your info to Connect with {data.name}
         </DialogTitle>
       </DialogHeader>
       <Card>

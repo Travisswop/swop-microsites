@@ -153,7 +153,7 @@ const SocialLarge: FC<Props> = ({
           priority
         />
       </motion.div>
-      <p className="text-xs">{name}</p>
+      <div className="text-xs">{name}</div>
     </motion.div>
   );
 };

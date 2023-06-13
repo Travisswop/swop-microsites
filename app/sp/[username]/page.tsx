@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import Header from '@/components/header';
 import Bio from '@/components/bio';
 import SocialSmall from '@/components/socialSmall';
@@ -7,23 +6,11 @@ import InfoBar from '@/components/infoBar';
 import PaymentBar from '@/components/paymentBar';
 import Contact from '@/components/contact';
 import Footer from '@/components/footer';
-import GatedAccess from '@/components/nftGated';
 import { Toaster } from '@/components/ui/toaster';
 import { Metadata } from 'next';
-import { siteConfig } from '@/config/site';
-import { absoluteUrl } from '@/lib/utils';
-import { motion, Variants } from 'framer-motion';
 import Video from '@/components/video';
-import Connect from '@/components/connect';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogFooter,
-} from '@/components/ui/dialog';
+import GatedAccess from '@/components/gatedAccess';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 const wait = (ms: number) =>
@@ -35,12 +22,7 @@ interface PageProps {
 }
 
 async function getUserData(username: string) {
-  const res = await fetch(
-    `${APP_URL}/api/user?username=${username}`,
-    {
-      next: { revalidate: 1 },
-    }
-  );
+  const res = await fetch(`${APP_URL}/api/user?username=${username}`);
   const data = await res.json();
 
   return data;
@@ -56,48 +38,20 @@ export async function generateMetadata({
   const res = await fetch(
     `${APP_URL}/api/user?username=${params.username}`
   );
+
   const data = (await res.json()) as User;
 
   if (!data.data) {
     return {};
   }
 
-  const url = process.env.NEXT_PUBLIC_APP_URL;
-
-  // const ogUrl = new URL(`${url}/api/og`);
-
   const shortcutIcon = data.data.profilePic.includes('https')
     ? data.data.profilePic
     : `/images/avatar/${data.data.profilePic}.png`;
 
-  // ogUrl.searchParams.set('name', data.data.name);
-  // ogUrl.searchParams.set('bio', siteConfig.name);
-  // ogUrl.searchParams.set('avatar', shortcutIcon);
-  // ogUrl.searchParams.set('mode', 'light');
-
   return {
     title: data.data.name,
     description: data.data.bio,
-    // openGraph: {
-    //   title: data.data.name,
-    //   description: data.data.bio,
-    //   type: 'website',
-    //   url: absoluteUrl(`/${data.data.username}`),
-    //   images: [
-    //     {
-    //       url: ogUrl.toString(),
-    //       width: 800,
-    //       height: 400,
-    //       alt: data.data.name,
-    //     },
-    //   ],
-    // },
-    // twitter: {
-    //   card: 'summary_large_image',
-    //   title: data.data.name,
-    //   description: data.data.bio,
-    //   images: [ogUrl.toString()],
-    // },
     icons: {
       icon: shortcutIcon,
       shortcut: shortcutIcon,
@@ -105,12 +59,6 @@ export async function generateMetadata({
     },
   };
 }
-
-const variants = {
-  hidden: { opacity: 0, x: 0, y: 25 },
-  enter: { opacity: 1, x: 0, y: 0 },
-  exit: { opacity: 0, x: -0, y: 25 },
-};
 
 export default async function PublicProfile({ params }: PageProps) {
   // await wait(10000);
@@ -133,8 +81,6 @@ export default async function PublicProfile({ params }: PageProps) {
     parentId,
     gatedInfo,
   } = data;
-
-  console.log(data.gatedInfo);
 
   return (
     <>
@@ -217,7 +163,6 @@ export default async function PublicProfile({ params }: PageProps) {
         </div>
       </main>
       <Toaster />
-      {/* {wait(50000)} */}
       <Dialog open={gatedAccess && gatedInfo.error === false}>
         <DialogContent>
           <GatedAccess

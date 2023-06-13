@@ -15,26 +15,11 @@ import { Card, CardContent } from '@/components/ui/card';
 
 interface Props {
   data: {
-    _id: string;
-    micrositeId: string;
-    title: string;
-    link: string;
-    description: string;
-    iconName: string;
-    iconPath: string;
-    group: string;
+    name: string;
   };
-  socialType: string;
-  parentId: string;
-  number: number;
 }
 
-const Subscribe: FC<Props> = ({
-  data,
-  socialType,
-  parentId,
-  number,
-}) => {
+const Subscribe: FC<Props> = ({ data }) => {
   return (
     <>
       <DialogHeader>
@@ -43,8 +28,8 @@ const Subscribe: FC<Props> = ({
         </DialogTitle>
         <DialogDescription>
           To get in touch with{' '}
-          <span className="font-bold">Rakibul Islam</span>, please
-          fill out the following form with accurate information. Your
+          <span className="font-bold">{data.name}</span>, please fill
+          out the following form with accurate information. Your
           privacy is important to us, and all the data provided will
           be handled in accordance with our privacy policy.
         </DialogDescription>

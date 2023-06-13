@@ -153,7 +153,7 @@ const SocialSmall: FC<Props> = ({
             priority
           />
         </div>
-        <p className="text-xs">{name}</p>
+        <div className="text-xs">{name}</div>
       </motion.div>
     </motion.div>
   );

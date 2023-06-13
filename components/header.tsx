@@ -106,18 +106,8 @@ const Header: FC<Props> = ({ avatar, cover, name }) => {
             <DialogContent>
               <Subscribe
                 data={{
-                  _id: '',
-                  micrositeId: '',
-                  title: '',
-                  link: '',
-                  description: '',
-                  iconName: '',
-                  iconPath: '',
-                  group: '',
+                  name,
                 }}
-                socialType={''}
-                parentId={''}
-                number={0}
               />
             </DialogContent>
           </Dialog>

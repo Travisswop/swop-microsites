@@ -18,7 +18,6 @@ const interBold = fetch(
 export async function GET(req: Request) {
   try {
     const fontRegular = await interRegular;
-    console.log('fontRegular', fontRegular);
     const fontBold = await interBold;
 
     const url = new URL(req.url);

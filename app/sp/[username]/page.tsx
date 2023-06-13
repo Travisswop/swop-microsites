@@ -22,7 +22,9 @@ interface PageProps {
 }
 
 async function getUserData(username: string) {
-  const res = await fetch(`${APP_URL}/api/user?username=${username}`);
+  const res = await fetch(
+    `https://app.apiswop.co/api/v2/web/user/${username}`
+  );
   const data = await res.json();
 
   return data;
@@ -36,7 +38,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const res = await fetch(
-    `${APP_URL}/api/user?username=${params.username}`
+    `https://app.apiswop.co/api/v2/web/user/${params.username}`
   );
 
   const data = (await res.json()) as User;
@@ -163,7 +165,7 @@ export default async function PublicProfile({ params }: PageProps) {
         </div>
       </main>
       <Toaster />
-      {/* <Dialog open={gatedAccess && gatedInfo.error === false}>
+      <Dialog open={gatedAccess && gatedInfo.error === false}>
         <DialogContent>
           <GatedAccess
             data={{
@@ -178,7 +180,7 @@ export default async function PublicProfile({ params }: PageProps) {
             }}
           />
         </DialogContent>
-      </Dialog> */}
+      </Dialog>
     </>
   );
 }

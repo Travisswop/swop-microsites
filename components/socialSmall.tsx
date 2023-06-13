@@ -137,11 +137,11 @@ const SocialSmall: FC<Props> = ({
           stiffness: 400,
           damping: 10,
         }}
-        className="flex flex-row gap-2 items-center justify-between bg-white rounded-full px-5 py-3 sm:px-8 sm:py-2 shadow shadow-slate-400 cursor-pointer "
+        className="flex flex-row gap-2 items-center bg-white justify-center rounded-full px-5 py-3 sm:px-8 sm:py-2 shadow shadow-slate-400 cursor-pointer "
       >
         <div>
           <Image
-            className="object-fill w-full h-4 sm:h-6 rounded-md"
+            className="object-fill w-4 h-4 sm:h-6 rounded-md"
             src={
               iconPath
                 ? iconPath

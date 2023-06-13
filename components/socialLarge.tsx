@@ -141,7 +141,7 @@ const SocialLarge: FC<Props> = ({
         }}
       >
         <Image
-          className="object-fill w-full h-24 sm:h-28 rounded-[30px] bg-transparent shadow-lg "
+          className="object-fill w-24 h-24 sm:w-28 sm:h-28 rounded-[30px] bg-transparent shadow-lg "
           src={
             iconPath
               ? iconPath

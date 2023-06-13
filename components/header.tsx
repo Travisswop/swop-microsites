@@ -1,5 +1,5 @@
 'use client';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import Subscribe from '@/components/subscribe';
@@ -16,9 +16,19 @@ interface Props {
   avatar: string;
   cover: string;
   name: string;
+  parentId: string;
+  micrositeId: string;
 }
 
-const Header: FC<Props> = ({ avatar, cover, name }) => {
+const Header: FC<Props> = ({
+  avatar,
+  cover,
+  name,
+  parentId,
+  micrositeId,
+}) => {
+  const [open, setOpen] = useState(false);
+  console.log('open', open);
   return (
     <div className="relative w-full h-60 sm:h-64 mt-2">
       <motion.div
@@ -51,7 +61,7 @@ const Header: FC<Props> = ({ avatar, cover, name }) => {
             delay: 0.4,
             ease: [0, 0.71, 0.2, 1.01],
           }}
-          className="absolute top-4 left-4 cursor-pointer"
+          className="absolute top-4 left-6 sm:left-4 cursor-pointer"
         >
           <Dialog>
             <DialogTrigger>
@@ -91,9 +101,9 @@ const Header: FC<Props> = ({ avatar, cover, name }) => {
             delay: 0.4,
             ease: [0, 0.71, 0.2, 1.01],
           }}
-          className="absolute top-4 right-4 cursor-pointer"
+          className="absolute top-4 right-6 sm:right-4 cursor-pointer"
         >
-          <Dialog>
+          <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
               <Image
                 className="object-fill w-8 h-8"
@@ -107,7 +117,10 @@ const Header: FC<Props> = ({ avatar, cover, name }) => {
               <Subscribe
                 data={{
                   name,
+                  parentId,
+                  micrositeId,
                 }}
+                handler={() => setOpen(false)}
               />
             </DialogContent>
           </Dialog>
@@ -124,7 +137,7 @@ const Header: FC<Props> = ({ avatar, cover, name }) => {
         >
           <div className="border-4 rounded-full border-white shadow-lg">
             <Image
-              className="object-fill w-full h-24 sm:h-full rounded-full"
+              className="object-fill w-full h-full rounded-full"
               src={
                 avatar.includes('https')
                   ? avatar

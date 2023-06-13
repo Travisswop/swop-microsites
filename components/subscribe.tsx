@@ -1,29 +1,97 @@
-import { FC } from 'react';
+'use client';
+import { FC, useState } from 'react';
+import { CheckCircle, Loader } from 'lucide-react';
 import {
-  Dialog,
-  DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogFooter,
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Toaster } from '@/components/ui/toaster';
+import { useToast } from '@/components/ui/use-toast';
+const wait = () =>
+  new Promise((resolve) => setTimeout(resolve, 3000));
 
 interface Props {
   data: {
     name: string;
+    parentId: string;
+    micrositeId: string;
   };
+  handler: () => void;
 }
 
-const Subscribe: FC<Props> = ({ data }) => {
+const Subscribe: FC<Props> = ({ data, handler }) => {
+  const { toast } = useToast();
+  const [success, setSuccess] = useState(false);
+  const [loader, setLoader] = useState(false);
+  const [subscribeInfo, setSubscribeInfo] = useState({
+    parentId: data.parentId,
+    micrositeId: data.micrositeId,
+    name: '',
+    jobTitle: '',
+    mobileNo: '',
+    email: '',
+    walletAddress: '',
+    website: '',
+  });
+  const submitData = async () => {
+    const option = {
+      method: 'POST',
+      body: JSON.stringify(subscribeInfo),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const response = await fetch(
+      'https://app.apiswop.co/web/subscribe',
+      option
+    );
+    const result = await response.json();
+
+    if (result.state === 'success') {
+      setLoader(false);
+      setSuccess(true);
+      wait().then(() => handler(true));
+    } else {
+      setLoader(false);
+      toast({
+        title: 'Something went wrong',
+      });
+    }
+  };
+
+  const subscribe = () => {
+    // handler(true);
+    if (!subscribeInfo.name) {
+      toast({
+        title: 'Enter your name',
+      });
+      return;
+    }
+    if (!subscribeInfo.mobileNo) {
+      toast({
+        title: 'Enter your mobile no.',
+      });
+      return;
+    }
+    if (!subscribeInfo.email) {
+      toast({
+        title: 'Enter your email',
+      });
+      return;
+    }
+    setLoader(true);
+    submitData();
+  };
   return (
     <>
       <DialogHeader>
-        <DialogTitle>
+        <DialogTitle className="mt-5">
           Subscribe to Unlock Exclusive Content
         </DialogTitle>
         <DialogDescription>
@@ -43,9 +111,15 @@ const Subscribe: FC<Props> = ({ data }) => {
               </Label>
               <Input
                 id="name"
-                value=""
+                value={subscribeInfo.name}
                 placeholder="John Doe"
                 className="col-span-3"
+                onChange={(e) =>
+                  setSubscribeInfo({
+                    ...subscribeInfo,
+                    name: e.target.value,
+                  })
+                }
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -54,10 +128,16 @@ const Subscribe: FC<Props> = ({ data }) => {
               </Label>
               <Input
                 id="email"
-                value=""
+                value={subscribeInfo.email}
                 type="email"
                 placeholder="john@gmail.com"
                 className="col-span-3"
+                onChange={(e) =>
+                  setSubscribeInfo({
+                    ...subscribeInfo,
+                    email: e.target.value,
+                  })
+                }
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -66,9 +146,15 @@ const Subscribe: FC<Props> = ({ data }) => {
               </Label>
               <Input
                 id="phone"
-                value=""
+                value={subscribeInfo.mobileNo}
                 placeholder="+880XXXXXXXXXXX"
                 className="col-span-3"
+                onChange={(e) =>
+                  setSubscribeInfo({
+                    ...subscribeInfo,
+                    mobileNo: e.target.value,
+                  })
+                }
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -77,9 +163,15 @@ const Subscribe: FC<Props> = ({ data }) => {
               </Label>
               <Input
                 id="job"
-                value=""
+                value={subscribeInfo.jobTitle}
                 placeholder="Software Engineer"
                 className="col-span-3"
+                onChange={(e) =>
+                  setSubscribeInfo({
+                    ...subscribeInfo,
+                    jobTitle: e.target.value,
+                  })
+                }
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -88,9 +180,15 @@ const Subscribe: FC<Props> = ({ data }) => {
               </Label>
               <Input
                 id="wallet"
-                value=""
+                value={subscribeInfo.walletAddress}
                 placeholder="0x..."
                 className="col-span-3"
+                onChange={(e) =>
+                  setSubscribeInfo({
+                    ...subscribeInfo,
+                    walletAddress: e.target.value,
+                  })
+                }
               />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
@@ -99,9 +197,15 @@ const Subscribe: FC<Props> = ({ data }) => {
               </Label>
               <Input
                 id="website"
-                value=""
+                value={subscribeInfo.website}
                 placeholder="www.website.com"
                 className="col-span-3"
+                onChange={(e) =>
+                  setSubscribeInfo({
+                    ...subscribeInfo,
+                    website: e.target.value,
+                  })
+                }
               />
             </div>
           </div>
@@ -109,7 +213,21 @@ const Subscribe: FC<Props> = ({ data }) => {
       </Card>
 
       <DialogFooter>
-        <Button type="submit">Subscribe</Button>
+        <Button
+          onClick={subscribe}
+          className={success ? 'text-lime-600' : 'text-gray-50'}
+        >
+          <span
+            className={success ? 'text-lime-600' : 'text-gray-50'}
+          >
+            Subscribe
+          </span>
+          {success && <CheckCircle className=" ml-2 h-5 w-5" />}
+          {loader && (
+            <Loader className=" ml-2 h-5 w-5 animate-spin " />
+          )}
+        </Button>
+        <Toaster />
       </DialogFooter>
     </>
   );

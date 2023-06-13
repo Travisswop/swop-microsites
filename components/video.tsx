@@ -50,6 +50,7 @@ const Video: FC<Props> = ({ link }) => {
   const opts = {
     height: windowSize.height,
     width: windowSize.width,
+
     playerVars: {
       autoplay: 0,
     },
@@ -66,7 +67,7 @@ const Video: FC<Props> = ({ link }) => {
         duration: 0.4,
         type: 'easeInOut',
       }}
-      className="rounded-lg overflow-hidden"
+      className="rounded-2xl overflow-hidden"
     >
       <YouTube videoId={videourl[1]} opts={opts} />
     </motion.div>

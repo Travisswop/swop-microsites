@@ -23,7 +23,8 @@ interface PageProps {
 
 async function getUserData(username: string) {
   const res = await fetch(
-    `https://app.apiswop.co/api/v2/web/user/${username}`
+    `https://app.apiswop.co/api/v2/web/user/${username}`,
+    { next: { revalidate: 60 } }
   );
   const data = await res.json();
 
@@ -38,7 +39,8 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const res = await fetch(
-    `https://app.apiswop.co/api/v2/web/user/${params.username}`
+    `https://app.apiswop.co/api/v2/web/user/${params.username}`,
+    { next: { revalidate: 60 } }
   );
 
   const data = (await res.json()) as User;
@@ -73,6 +75,7 @@ export default async function PublicProfile({ params }: PageProps) {
   }
 
   const {
+    _id,
     name,
     bio,
     profilePic,
@@ -91,6 +94,8 @@ export default async function PublicProfile({ params }: PageProps) {
           avatar={profilePic}
           cover={backgroundImg}
           name={name}
+          parentId={parentId}
+          micrositeId={_id}
         />
         <div className="my-4">
           <Bio name={name} bio={bio} />
@@ -112,7 +117,7 @@ export default async function PublicProfile({ params }: PageProps) {
             <Video link={info.videoUrl[0].videoUrl} />
           </div>
         )}
-        <div className="flex flex-row flex-wrap justify-evenly gap-8 sm:gap-10 my-8">
+        <div className="flex flex-row flex-wrap justify-evenly gap-4 sm:gap-10 my-8">
           {info?.socialLarge &&
             info.socialLarge.map((social: any, index: number) => (
               <SocialLarge

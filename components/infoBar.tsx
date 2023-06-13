@@ -88,7 +88,7 @@ const InfoBar: FC<Props> = ({
       >
         <div>
           <Image
-            className="object-fill w-full h-16 sm:h-20 rounded-[24px] shadow-lg"
+            className="object-fill w-20 h-20 rounded-[24px] shadow-lg"
             src={
               iconPath
                 ? iconPath

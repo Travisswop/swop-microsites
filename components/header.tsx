@@ -29,7 +29,7 @@ const Header: FC<Props> = ({ avatar, cover, name }) => {
           ease: [0, 0.71, 0.2, 1.01],
         }}
       >
-        <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg">
+        <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg mx-2 sm:mx-0">
           <Image
             className="object-fill w-full h-44 sm:h-48 rounded-md"
             src={

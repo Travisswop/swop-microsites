@@ -112,7 +112,7 @@ export default async function PublicProfile({ params }: PageProps) {
             <Video link={info.videoUrl[0].videoUrl} />
           </div>
         )}
-        <div className="flex flex-row flex-wrap justify-evenly gap-10 my-8">
+        <div className="flex flex-row flex-wrap justify-evenly gap-8 sm:gap-10 my-8">
           {info?.socialLarge &&
             info.socialLarge.map((social: any, index: number) => (
               <SocialLarge

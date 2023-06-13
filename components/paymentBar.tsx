@@ -83,7 +83,7 @@ const PaymentBar: FC<Props> = ({
         <div className="flex flex-row gap-2 items-center ">
           <div>
             <Image
-              className="object-fill w-full h-20 rounded-[24px] shadow-lg"
+              className="object-fill w-full h-16 sm:h-20  rounded-[24px] shadow-lg"
               src={imageUrl}
               alt={title}
               width={80}

@@ -14,7 +14,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/components/ui/use-toast';
 const wait = () =>
-  new Promise((resolve) => setTimeout(resolve, 3000));
+  new Promise((resolve) => setTimeout(resolve, 2500));
 
 interface Props {
   data: {

@@ -145,7 +145,7 @@ const SocialLarge: FC<Props> = ({
           src={
             iconPath
               ? iconPath
-              : `/images/social_icon_small_case/${iconName.toLowerCase()}.svg`
+              : `/images/social_icon/${iconName.toLowerCase()}.svg`
           }
           alt={iconName}
           width={130}

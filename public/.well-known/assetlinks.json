@@ -1,0 +1,7 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target" : { "namespace": "android_app", "package_name": "com.travisheron.swop",
+                 "sha256_cert_fingerprints": ["C9:41:0B:BD:22:B9:A2:C2:40:EB:0D:D9:CA:CF:2E:82:F5:4B:53:0A:2E:5E:C2:D7:C6:AF:8D:FC:7C:FD:55:DD"] }
+  }]
+
+  

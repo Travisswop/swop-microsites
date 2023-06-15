@@ -23,8 +23,7 @@ interface PageProps {
 
 async function getUserData(username: string) {
   const res = await fetch(
-    `https://app.apiswop.co/api/v2/web/user/${username}`,
-    { next: { revalidate: 60 } }
+    `https://app.apiswop.co/api/v2/web/user/${username}`
   );
   const data = await res.json();
 
@@ -39,8 +38,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const res = await fetch(
-    `https://app.apiswop.co/api/v2/web/user/${params.username}`,
-    { next: { revalidate: 60 } }
+    `https://app.apiswop.co/api/v2/web/user/${params.username}`
   );
 
   const data = (await res.json()) as User;
@@ -59,7 +57,14 @@ export async function generateMetadata({
     icons: {
       icon: shortcutIcon,
       shortcut: shortcutIcon,
-      apple: shortcutIcon,
+      apple: [
+        { url: shortcutIcon },
+        { url: shortcutIcon, sizes: '72x72', type: 'image/png' },
+        { url: shortcutIcon, sizes: '76x76', type: 'image/png' },
+        { url: shortcutIcon, sizes: '114x114', type: 'image/png' },
+        { url: shortcutIcon, sizes: '180x180', type: 'image/png' },
+        { url: shortcutIcon, sizes: '228x228', type: 'image/png' },
+      ],
     },
   };
 }

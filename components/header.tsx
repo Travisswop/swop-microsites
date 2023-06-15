@@ -28,7 +28,7 @@ const Header: FC<Props> = ({
   micrositeId,
 }) => {
   const [open, setOpen] = useState(false);
-  console.log('open', open);
+  const [openDC, setOpenDC] = useState(false);
   return (
     <div className="relative w-full h-60 sm:h-64 mt-2">
       <motion.div
@@ -63,7 +63,7 @@ const Header: FC<Props> = ({
           }}
           className="absolute top-4 left-6 sm:left-4 cursor-pointer"
         >
-          <Dialog>
+          <Dialog open={openDC} onOpenChange={setOpenDC}>
             <DialogTrigger>
               <Image
                 className="object-fill w-8 h-8"
@@ -76,19 +76,12 @@ const Header: FC<Props> = ({
             <DialogContent>
               <Connect
                 data={{
-                  _id: '',
-                  micrositeId: '',
-                  title: '',
-                  link: '',
-                  description: '',
-                  iconName: '',
-                  iconPath: '',
                   name,
+                  parentId,
+                  micrositeId,
                   avatar,
                 }}
-                socialType={''}
-                parentId={''}
-                number={0}
+                handler={() => setOpenDC(false)}
               />
             </DialogContent>
           </Dialog>

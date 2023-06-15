@@ -115,7 +115,7 @@ const SocialSmall: FC<Props> = ({
     }
   };
 
-  const delay = number * 0.1;
+  const delay = 0.5;
 
   return (
     <motion.div

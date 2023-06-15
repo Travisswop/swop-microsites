@@ -4,6 +4,8 @@ import { Analytics } from '@vercel/analytics/react';
 import '@/styles/globals.css';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/config/site';
+import Loading from './loading';
+import { Suspense } from 'react';
 export const metadata = {
   title: {
     default: siteConfig.name,
@@ -55,7 +57,7 @@ export default function RootLayout({
           fontSans.variable
         )}
       >
-        {children}
+        <Suspense fallback={<Loading />}>{children}</Suspense>
       </body>
       <Analytics />
     </html>

@@ -11,7 +11,6 @@ import { Metadata } from 'next';
 import Video from '@/components/video';
 import GatedAccess from '@/components/gatedAccess';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
-import Loading from './loading';
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 const wait = (ms: number) =>
@@ -87,7 +86,6 @@ export async function generateMetadata({
 }
 
 export default async function PublicProfile({ params }: PageProps) {
-  <Loading />;
   // await wait(10000);
   const { data, error } = await getUserData(params.username);
   if (error) {

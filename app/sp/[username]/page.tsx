@@ -10,6 +10,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { Metadata } from 'next';
 import Video from '@/components/video';
 import GatedAccess from '@/components/gatedAccess';
+import Custom404 from './404';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -88,11 +89,8 @@ export async function generateMetadata({
 export default async function PublicProfile({ params }: PageProps) {
   // await wait(10000);
   const { data, error } = await getUserData(params.username);
-  if (error) {
-    return <div>failed to load</div>;
-  }
   if (!data) {
-    return <div>loading...</div>;
+    return <Custom404 />;
   }
 
   const {

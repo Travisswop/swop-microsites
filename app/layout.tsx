@@ -27,6 +27,12 @@ export const metadata = {
     apple: '/apple-touch-icon.png',
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
+  og: {
+    site_name: siteConfig.name,
+    type: 'website',
+    locale: 'en_US',
+    image: '/images/android-chrome-192x192.png',
+  },
 };
 
 const fontSans = FontSans({

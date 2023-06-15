@@ -66,6 +66,20 @@ export async function generateMetadata({
         { url: shortcutIcon, sizes: '228x228', type: 'image/png' },
       ],
     },
+    openGraph: {
+      title: data.data.name,
+      description: data.data.bio,
+      url: `${APP_URL}/sp/${params.username}`,
+      type: 'website',
+      images: [
+        {
+          url: shortcutIcon,
+          width: 200,
+          height: 200,
+          alt: data.data.name,
+        },
+      ],
+    },
   };
 }
 

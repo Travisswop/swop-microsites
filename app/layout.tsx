@@ -1,6 +1,6 @@
 import { Inter as FontSans } from 'next/font/google';
 import localFont from 'next/font/local';
-
+import { Analytics } from '@vercel/analytics/react';
 import '@/styles/globals.css';
 import { cn } from '@/lib/utils';
 import { siteConfig } from '@/config/site';
@@ -57,6 +57,7 @@ export default function RootLayout({
       >
         {children}
       </body>
+      <Analytics />
     </html>
   );
 }

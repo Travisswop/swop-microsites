@@ -33,6 +33,8 @@ export const metadata = {
     locale: 'en_US',
     image: '/images/android-chrome-192x192.png',
   },
+  assetlinks: '/.well-known/assetlinks.json',
+  appleAppSiteAssociation: '/.well-known/apple-app-site-association',
 };
 
 const fontSans = FontSans({

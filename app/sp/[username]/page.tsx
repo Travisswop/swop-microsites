@@ -59,6 +59,8 @@ export async function generateMetadata({
       shortcut: shortcutIcon,
       apple: [
         { url: shortcutIcon },
+        { url: shortcutIcon, sizes: '57x57', type: 'image/png' },
+        { url: shortcutIcon, sizes: '60x60', type: 'image/png' },
         { url: shortcutIcon, sizes: '72x72', type: 'image/png' },
         { url: shortcutIcon, sizes: '76x76', type: 'image/png' },
         { url: shortcutIcon, sizes: '114x114', type: 'image/png' },

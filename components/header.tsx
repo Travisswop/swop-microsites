@@ -30,7 +30,7 @@ const Header: FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [openDC, setOpenDC] = useState(false);
   return (
-    <div className="relative w-full h-60 sm:h-64 mt-2">
+    <div className="relative w-full h-64 mt-2">
       <motion.div
         initial={{ opacity: 0, scale: 0.5 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -39,17 +39,17 @@ const Header: FC<Props> = ({
           ease: [0, 0.71, 0.2, 1.01],
         }}
       >
-        <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg mx-2 sm:mx-0">
+        <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg">
           <Image
-            className="object-fill w-full h-44 sm:h-48 rounded-md"
+            className="object-fill w-full h-48 rounded-md"
             src={
               cover.includes('https')
                 ? cover
                 : `/images/coverphoto/${cover}.jpg`
             }
             alt={name}
-            width={420}
-            height={200}
+            width={436}
+            height={192}
             priority
           />
         </div>
@@ -61,7 +61,7 @@ const Header: FC<Props> = ({
             delay: 0.4,
             ease: [0, 0.71, 0.2, 1.01],
           }}
-          className="absolute top-4 left-6 sm:left-4 cursor-pointer"
+          className="absolute top-4 left-4 cursor-pointer"
         >
           <Dialog open={openDC} onOpenChange={setOpenDC}>
             <DialogTrigger>
@@ -94,7 +94,7 @@ const Header: FC<Props> = ({
             delay: 0.4,
             ease: [0, 0.71, 0.2, 1.01],
           }}
-          className="absolute top-4 right-6 sm:right-4 cursor-pointer"
+          className="absolute top-4 right-4 cursor-pointer"
         >
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>

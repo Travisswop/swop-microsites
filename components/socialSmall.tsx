@@ -145,7 +145,7 @@ const SocialSmall: FC<Props> = ({
             src={
               iconPath
                 ? iconPath
-                : `/images/social_icon/${iconName}.svg`
+                : `/images/social_logo/${iconName.toLowerCase()}.svg`
             }
             alt={iconName}
             width={20}

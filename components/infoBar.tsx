@@ -92,7 +92,7 @@ const InfoBar: FC<Props> = ({
             src={
               iconPath
                 ? iconPath
-                : `/images/social_icon/${iconName}.svg`
+                : `/images/social_logo/${iconName.toLowerCase()}.svg`
             }
             alt="Twitter Logo"
             width={80}

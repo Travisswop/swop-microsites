@@ -2,6 +2,7 @@
 import { FC } from 'react';
 import { motion } from 'framer-motion';
 import YouTube from 'react-youtube';
+import ReactPlayer from 'react-player';
 import { useEffect, useState } from 'react';
 
 interface Props {

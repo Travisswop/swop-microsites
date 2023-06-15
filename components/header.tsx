@@ -30,18 +30,11 @@ const Header: FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [openDC, setOpenDC] = useState(false);
   return (
-    <div className="relative w-full h-64 mt-2">
-      <motion.div
-        initial={{ opacity: 0, scale: 0.5 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{
-          duration: 0.4,
-          ease: [0, 0.71, 0.2, 1.01],
-        }}
-      >
-        <div className="overflow-hidden rounded-md border-[6px] border-white shadow-lg">
+    <div className="relative w-full h-60 mt-2">
+      <div>
+        <div className="overflow-hidden h-48 rounded-md border-[6px] border-white shadow-lg">
           <Image
-            className="object-fill w-full h-48 rounded-md"
+            className="object-fill w-full h-full rounded-md"
             src={
               cover.includes('https')
                 ? cover
@@ -53,16 +46,7 @@ const Header: FC<Props> = ({
             priority
           />
         </div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.4,
-            delay: 0.4,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
-          className="absolute top-4 left-4 cursor-pointer"
-        >
+        <div className="absolute top-4 left-4 cursor-pointer">
           <Dialog open={openDC} onOpenChange={setOpenDC}>
             <DialogTrigger>
               <Image
@@ -85,17 +69,8 @@ const Header: FC<Props> = ({
               />
             </DialogContent>
           </Dialog>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.4,
-            delay: 0.4,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
-          className="absolute top-4 right-4 cursor-pointer"
-        >
+        </div>
+        <div className="absolute top-4 right-4 cursor-pointer">
           <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger>
               <Image
@@ -117,17 +92,8 @@ const Header: FC<Props> = ({
               />
             </DialogContent>
           </Dialog>
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{
-            duration: 0.4,
-            delay: 0.8,
-            ease: [0, 0.71, 0.2, 1.01],
-          }}
-          className="absolute flex items-center justify-center transition-all w-28 h-28 bottom-0 left-0 right-0 mx-auto"
-        >
+        </div>
+        <div className="absolute flex items-center justify-center transition-all w-28 h-28 bottom-0 left-0 right-0 mx-auto">
           <div className="border-4 rounded-full border-white shadow-lg">
             <Image
               className="object-fill w-full h-full rounded-full"
@@ -142,8 +108,8 @@ const Header: FC<Props> = ({
               priority
             />
           </div>
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </div>
   );
 };

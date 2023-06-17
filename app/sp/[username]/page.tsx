@@ -1,3 +1,4 @@
+import { redirect } from 'next/navigation';
 import Header from '@/components/header';
 import Bio from '@/components/bio';
 import SocialSmall from '@/components/socialSmall';
@@ -10,8 +11,10 @@ import { Toaster } from '@/components/ui/toaster';
 import { Metadata } from 'next';
 import Video from '@/components/video';
 import GatedAccess from '@/components/gatedAccess';
+import Redirect from '@/components/redirect';
 import Custom404 from './404';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
+
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 const wait = (ms: number) =>
@@ -24,7 +27,8 @@ interface PageProps {
 
 async function getUserData(username: string) {
   const res = await fetch(
-    `https://app.apiswop.co/api/v2/web/user/${username}`
+    `https://app.apiswop.co/api/v2/web/user/${username}`,
+    { next: { revalidate: 60 } }
   );
   const data = await res.json();
 
@@ -106,6 +110,10 @@ export default async function PublicProfile({ params }: PageProps) {
     gatedInfo,
   } = data;
 
+  if (!gatedAccess && direct) {
+    return <Redirect data={data} />;
+  }
+
   return (
     <>
       <main className="flex max-w-md mx-auto min-h-screen flex-col items-center">
@@ -148,41 +156,43 @@ export default async function PublicProfile({ params }: PageProps) {
               />
             ))}
         </div>
-        <div className="w-full my-2">
-          {info?.infoBar &&
-            info.infoBar.map((social: any, index: number) => (
-              <InfoBar
-                number={index}
-                key={social._id}
-                data={social}
-                socialType="infoBar"
-                parentId={parentId}
-              />
-            ))}
-        </div>
-        <div className="w-full my-2">
-          {info?.product &&
-            info.product.map((social: any, index: number) => (
-              <PaymentBar
-                number={index}
-                key={social._id}
-                data={social}
-                socialType="product"
-                parentId={parentId}
-              />
-            ))}
-        </div>
-        <div className="w-full my-2">
-          {info?.contact &&
-            info.contact.map((social: any, index: number) => (
-              <Contact
-                number={index}
-                key={social._id}
-                data={social}
-                socialType="contact"
-                parentId={parentId}
-              />
-            ))}
+        <div className="w-full">
+          <div>
+            {info?.infoBar &&
+              info.infoBar.map((social: any, index: number) => (
+                <InfoBar
+                  number={index}
+                  key={social._id}
+                  data={social}
+                  socialType="infoBar"
+                  parentId={parentId}
+                />
+              ))}
+          </div>
+          <div>
+            {info?.product &&
+              info.product.map((social: any, index: number) => (
+                <PaymentBar
+                  number={index}
+                  key={social._id}
+                  data={social}
+                  socialType="product"
+                  parentId={parentId}
+                />
+              ))}
+          </div>
+          <div>
+            {info?.contact &&
+              info.contact.map((social: any, index: number) => (
+                <Contact
+                  number={index}
+                  key={social._id}
+                  data={social}
+                  socialType="contact"
+                  parentId={parentId}
+                />
+              ))}
+          </div>
         </div>
         <div>
           <Footer brandIcon="/brand-icon.svg" />

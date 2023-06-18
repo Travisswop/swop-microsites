@@ -28,7 +28,7 @@ interface PageProps {
 async function getUserData(username: string) {
   const res = await fetch(
     `https://app.apiswop.co/api/v2/web/user/${username}`,
-    { next: { revalidate: 60 } }
+    { next: { revalidate: 0 } }
   );
   const data = await res.json();
 
@@ -111,7 +111,12 @@ export default async function PublicProfile({ params }: PageProps) {
   } = data;
 
   if (!gatedAccess && direct) {
-    return <Redirect data={data} />;
+    return (
+      <>
+        {' '}
+        <Redirect data={data} /> <Toaster />
+      </>
+    );
   }
 
   return (

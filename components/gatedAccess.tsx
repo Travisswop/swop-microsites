@@ -86,6 +86,10 @@ const GatedAccess: FC<Props> = ({ data }) => {
         `https://app.apiswop.co/api/v2/web/isTokenHolder/${address}/${contractAddress}/${network}`
       );
       const data = await res.json();
+      console.log(
+        '🚀 ~ file: gatedAccess.tsx:89 ~ checkValidation ~ data:',
+        data
+      );
 
       setTokenHolder(data.result.isHolderOfCollection);
 
@@ -166,9 +170,13 @@ const GatedAccess: FC<Props> = ({ data }) => {
           <Alert className="mt-5  border-lime-500">
             <BellRing className="h-4 w-4" />
             <AlertTitle className="text-lime-700">
-              Congratulations!
+              Congratulations! Your are a NFT holder.
             </AlertTitle>
-            <AlertDescription></AlertDescription>
+            <AlertDescription>
+              <Link href={eventLink} className="underline">
+                {eventLink}{' '}
+              </Link>
+            </AlertDescription>
           </Alert>
         )}
       </DialogDescription>

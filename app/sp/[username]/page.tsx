@@ -121,7 +121,7 @@ export default async function PublicProfile({ params }: PageProps) {
 
   return (
     <>
-      <main className="flex max-w-md mx-auto min-h-screen flex-col items-center">
+      <main className="flex max-w-md mx-auto min-h-screen flex-col items-center px-4">
         <Header
           avatar={profilePic}
           cover={backgroundImg}
@@ -145,7 +145,7 @@ export default async function PublicProfile({ params }: PageProps) {
             ))}
         </div>
         {info.videoUrl.length > 0 && (
-          <div className="flex mt-8 w-11/12">
+          <div className="flex mt-6 w-full">
             <Video link={info.videoUrl[0].videoUrl} />
           </div>
         )}

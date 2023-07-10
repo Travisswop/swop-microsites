@@ -141,7 +141,7 @@ const SocialSmall: FC<Props> = ({
       >
         <div>
           <Image
-            className="object-fill w-10 h-10 rounded-full"
+            className="object-fill w-12 h-12 rounded-full"
             src={
               iconPath
                 ? iconPath

@@ -30,9 +30,9 @@ const Header: FC<Props> = ({
   const [open, setOpen] = useState(false);
   const [openDC, setOpenDC] = useState(false);
   return (
-    <div className="relative w-full h-60 mt-2">
+    <div className="relative w-full h-56 mt-3">
       <div>
-        <div className="overflow-hidden h-48 rounded-md border-[6px] border-white shadow-lg">
+        <div className="overflow-hidden h-44 rounded-md border-[6px] border-white shadow-lg">
           <Image
             className="object-fill w-full h-full rounded-md"
             src={

@@ -132,7 +132,7 @@ export default async function PublicProfile({ params }: PageProps) {
         <div className="my-4">
           <Bio name={name} bio={bio} />
         </div>
-        <div className="flex flex-row flex-wrap justify-evenly gap-6">
+        <div className="flex flex-row flex-wrap justify-evenly gap-4">
           {info?.socialTop &&
             info.socialTop.map((social: any, index: number) => (
               <SocialSmall

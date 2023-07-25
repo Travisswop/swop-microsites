@@ -24,7 +24,7 @@ const variants = {
   exit: { opacity: 0, x: -0, y: 25 },
 };
 
-const download = async (data: any) => {
+const download = async (data: any, parentId: string) => {
   const vCard = await downloadVCard(data);
   const blob = new Blob([vCard], { type: 'text/vcard' });
   const url = window.URL.createObjectURL(blob);
@@ -35,6 +35,23 @@ const download = async (data: any) => {
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+
+  try {
+    await fetch('https://app.apiswop.co/web/updateCount', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        socialType: 'contact',
+        socialId: data._id,
+        parentId,
+      }),
+    });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 const Contact: FC<Props> = ({
@@ -72,7 +89,7 @@ const Contact: FC<Props> = ({
           stiffness: 400,
           damping: 10,
         }}
-        onClick={() => download(data)}
+        onClick={() => download(data, parentId)}
         className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-3 rounded-[12px]"
       >
         <div>

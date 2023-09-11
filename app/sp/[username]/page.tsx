@@ -1,22 +1,23 @@
-import Bio from "@/components/bio";
-import Contact from "@/components/contact";
-import Footer from "@/components/footer";
-import GatedAccess from "@/components/gatedAccess";
-import Header from "@/components/header";
-import InfoBar from "@/components/infoBar";
-import PaymentBar from "@/components/paymentBar";
-import Redirect from "@/components/redirect";
-import SocialLarge from "@/components/socialLarge";
-import SocialSmall from "@/components/socialSmall";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Toaster } from "@/components/ui/toaster";
-import Video from "@/components/video";
-import { Metadata } from "next";
-import Custom404 from "./404";
+import Bio from '@/components/bio';
+import Contact from '@/components/contact';
+import Footer from '@/components/footer';
+import GatedAccess from '@/components/gatedAccess';
+import Header from '@/components/header';
+import InfoBar from '@/components/infoBar';
+import PaymentBar from '@/components/paymentBar';
+import Redirect from '@/components/redirect';
+import SocialLarge from '@/components/socialLarge';
+import SocialSmall from '@/components/socialSmall';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Toaster } from '@/components/ui/toaster';
+import Video from '@/components/video';
+import { Metadata } from 'next';
+import Custom404 from './404';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
-const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+const wait = (ms: number) =>
+  new Promise((resolve) => setTimeout(resolve, ms));
 interface PageProps {
   params: {
     username: string;
@@ -25,7 +26,7 @@ interface PageProps {
 
 async function getUserData(username: string) {
   const res = await fetch(
-    `http://localhost:4000/api/v2/web/user/${username}`,
+    `https://app.apiswop.co/api/v2/web/user/${username}`,
     { next: { revalidate: 0 } }
   );
   const data = await res.json();
@@ -49,7 +50,7 @@ export async function generateMetadata({
     return {};
   }
 
-  const shortcutIcon = data.data.profilePic.includes("https")
+  const shortcutIcon = data.data.profilePic.includes('https')
     ? data.data.profilePic
     : `/images/avatar/${data.data.profilePic}.png`;
 
@@ -61,20 +62,20 @@ export async function generateMetadata({
       shortcut: shortcutIcon,
       apple: [
         { url: shortcutIcon },
-        { url: shortcutIcon, sizes: "57x57", type: "image/png" },
-        { url: shortcutIcon, sizes: "60x60", type: "image/png" },
-        { url: shortcutIcon, sizes: "72x72", type: "image/png" },
-        { url: shortcutIcon, sizes: "76x76", type: "image/png" },
-        { url: shortcutIcon, sizes: "114x114", type: "image/png" },
-        { url: shortcutIcon, sizes: "180x180", type: "image/png" },
-        { url: shortcutIcon, sizes: "228x228", type: "image/png" },
+        { url: shortcutIcon, sizes: '57x57', type: 'image/png' },
+        { url: shortcutIcon, sizes: '60x60', type: 'image/png' },
+        { url: shortcutIcon, sizes: '72x72', type: 'image/png' },
+        { url: shortcutIcon, sizes: '76x76', type: 'image/png' },
+        { url: shortcutIcon, sizes: '114x114', type: 'image/png' },
+        { url: shortcutIcon, sizes: '180x180', type: 'image/png' },
+        { url: shortcutIcon, sizes: '228x228', type: 'image/png' },
       ],
     },
     openGraph: {
       title: data.data.name,
       description: data.data.bio,
       url: `${APP_URL}/sp/${params.username}`,
-      type: "website",
+      type: 'website',
       images: [
         {
           url: shortcutIcon,
@@ -110,7 +111,7 @@ export default async function PublicProfile({ params }: PageProps) {
   if (!gatedAccess && direct) {
     return (
       <>
-        {" "}
+        {' '}
         <Redirect data={data} /> <Toaster />
       </>
     );

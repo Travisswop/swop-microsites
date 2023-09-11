@@ -27,7 +27,7 @@ interface PageProps {
 
 async function getUserData(username: string) {
   const res = await fetch(
-    `https://app.apiswop.co/api/v2/web/user/${username}`,
+    `http://localhost:4000/api/v2/web/user/${username}`,
     { next: { revalidate: 0 } }
   );
   const data = await res.json();

@@ -108,6 +108,8 @@ export default async function PublicProfile({ params }: PageProps) {
     gatedInfo,
   } = data;
 
+  console.log(data);
+
   if (!gatedAccess && direct) {
     return (
       <>

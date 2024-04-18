@@ -13,8 +13,19 @@ import { Toaster } from '@/components/ui/toaster';
 import Video from '@/components/video';
 import { Metadata } from 'next';
 import Custom404 from './404';
+import Image from 'next/image';
+import styles from '@/styles/styles.module.css';
+import mountains from '@/public/images/background/1.png';
+import { background } from '@/lib/icons';
+import Message from '@/components/message';
+import Ens from '@/components/ens';
+import Blog from '@/components/blog';
+import MP3 from '@/components/mp3';
+import Referral from '@/components/referral';
+import Redeem from '@/components/redeem';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const wait = (ms: number) =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -25,10 +36,9 @@ interface PageProps {
 }
 
 async function getUserData(username: string) {
-  const res = await fetch(
-    `https://app.apiswop.co/api/v2/web/user/${username}`,
-    { next: { revalidate: 0 } }
-  );
+  const res = await fetch(`${API_URL}/api/v1/web/user/${username}`, {
+    next: { revalidate: 0 },
+  });
   const data = await res.json();
 
   return data;
@@ -42,21 +52,23 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const res = await fetch(
-    `https://app.apiswop.co/api/v2/web/user/${params.username}`
+    `${API_URL}/api/v1/web/user/${params.username}`
   );
 
-  const data = (await res.json()) as User;
-  if (!data.data) {
+  const { data } = (await res.json()) as User;
+  if (!data) {
     return {};
   }
 
-  const shortcutIcon = data.data.profilePic.includes('https')
-    ? data.data.profilePic
-    : `/images/avatar/${data.data.profilePic}.png`;
+  const { name, profilePic, bio } = data;
+
+  const shortcutIcon = profilePic.includes('https')
+    ? profilePic
+    : `/images/avatar/${profilePic}.png`;
 
   return {
-    title: data.data.name,
-    description: data.data.bio,
+    title: name,
+    description: bio,
     icons: {
       icon: shortcutIcon,
       shortcut: shortcutIcon,
@@ -72,8 +84,8 @@ export async function generateMetadata({
       ],
     },
     openGraph: {
-      title: data.data.name,
-      description: data.data.bio,
+      title: name,
+      description: bio,
       url: `${APP_URL}/sp/${params.username}`,
       type: 'website',
       images: [
@@ -81,7 +93,7 @@ export async function generateMetadata({
           url: shortcutIcon,
           width: 200,
           height: 200,
-          alt: data.data.name,
+          alt: name,
         },
       ],
     },
@@ -106,9 +118,22 @@ export default async function PublicProfile({ params }: PageProps) {
     direct,
     parentId,
     gatedInfo,
+    theme,
+    ens,
+  }: {
+    _id: string;
+    name: string;
+    bio: string;
+    profilePic: string;
+    backgroundImg: number | string;
+    info: any;
+    gatedAccess: boolean;
+    direct: boolean;
+    parentId: string;
+    gatedInfo: any;
+    theme: boolean;
+    ens: string;
   } = data;
-
-  console.log(data);
 
   if (!gatedAccess && direct) {
     return (
@@ -121,18 +146,34 @@ export default async function PublicProfile({ params }: PageProps) {
 
   return (
     <>
+      {theme && (
+        <div className={styles.bgWrap}>
+          <Image
+            alt="Mountains"
+            src={background[backgroundImg as keyof typeof background]}
+            placeholder="blur"
+            quality={100}
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'cover',
+            }}
+          />
+        </div>
+      )}
       <main className="flex max-w-md mx-auto min-h-screen flex-col items-center px-4">
         <Header
           avatar={profilePic}
-          cover={backgroundImg}
+          cover={backgroundImg.toString()}
           name={name}
           parentId={parentId}
           micrositeId={_id}
+          theme={theme}
         />
         <div className="my-4">
           <Bio name={name} bio={bio} />
         </div>
-        <div className="flex flex-row flex-wrap justify-evenly gap-4">
+        <div className="flex flex-row flex-wrap justify-evenly gap-6 px-6 py-2">
           {info?.socialTop &&
             info.socialTop.map((social: any, index: number) => (
               <SocialSmall
@@ -144,11 +185,22 @@ export default async function PublicProfile({ params }: PageProps) {
               />
             ))}
         </div>
-        {info.videoUrl.length > 0 && (
-          <div className="flex mt-6 w-full">
-            <Video link={info.videoUrl[0].videoUrl} />
-          </div>
-        )}
+
+        {/* Blog */}
+        <div className="w-full mt-8">
+          {info?.blog &&
+            info.blog.map((social: any, index: number) => (
+              <Blog
+                number={index}
+                key={social._id}
+                data={social}
+                socialType="blog"
+                parentId={parentId}
+              />
+            ))}
+        </div>
+
+        {/* Social Media Big */}
         <div className="flex flex-row flex-wrap justify-evenly gap-4 sm:gap-10 my-8">
           {info?.socialLarge &&
             info.socialLarge.map((social: any, index: number) => (
@@ -161,44 +213,134 @@ export default async function PublicProfile({ params }: PageProps) {
               />
             ))}
         </div>
+
+        {/* Redeem Link */}
         <div className="w-full">
-          <div>
-            {info?.infoBar &&
-              info.infoBar.map((social: any, index: number) => (
-                <InfoBar
-                  number={index}
-                  key={social._id}
-                  data={social}
-                  socialType="infoBar"
-                  parentId={parentId}
-                />
-              ))}
-          </div>
-          <div>
-            {info?.product &&
-              info.product.map((social: any, index: number) => (
-                <PaymentBar
-                  number={index}
-                  key={social._id}
-                  data={social}
-                  socialType="product"
-                  parentId={parentId}
-                />
-              ))}
-          </div>
-          <div>
-            {info?.contact &&
-              info.contact.map((social: any, index: number) => (
-                <Contact
-                  number={index}
-                  key={social._id}
-                  data={social}
-                  socialType="contact"
-                  parentId={parentId}
-                />
-              ))}
-          </div>
+          {info?.redeemLink &&
+            info.redeemLink.map((social: any, index: number) => (
+              <Redeem
+                number={index}
+                key={social._id}
+                data={social}
+                socialType="redeemLink"
+                parentId={parentId}
+              />
+            ))}
         </div>
+
+        {/* Referral Code */}
+        <div className="w-full">
+          {info?.referral &&
+            info.referral.map((social: any, index: number) => (
+              <Referral
+                number={index}
+                key={social._id}
+                data={social}
+                socialType="referral"
+                parentId={parentId}
+              />
+            ))}
+        </div>
+
+        {/* Ens Domain */}
+        <div className="w-full">
+          {info?.ensDomain &&
+            info.ensDomain.map((social: any, index: number) => (
+              <Ens
+                number={index}
+                key={social._id}
+                data={social}
+                socialType="ens"
+                parentId={parentId}
+              />
+            ))}
+        </div>
+
+        {/* Contact card */}
+        <div className="w-full">
+          {info?.contact &&
+            info.contact.map((social: any, index: number) => (
+              <Contact
+                number={index}
+                key={social._id}
+                data={social}
+                socialType="contact"
+                parentId={parentId}
+              />
+            ))}
+        </div>
+
+        {/* InfoBar */}
+        <div className="w-full">
+          {info?.infoBar &&
+            info.infoBar.map((social: any, index: number) => (
+              <InfoBar
+                number={index}
+                key={social._id}
+                data={social}
+                socialType="infoBar"
+                parentId={parentId}
+              />
+            ))}
+        </div>
+
+        {/* Product Payment */}
+        <div className="w-full">
+          {info?.product &&
+            info.product.map((social: any, index: number) => (
+              <PaymentBar
+                number={index}
+                key={social._id}
+                data={social}
+                socialType="product"
+                parentId={parentId}
+              />
+            ))}
+        </div>
+
+        {/* Audio */}
+        <div className="w-full">
+          {info?.audio &&
+            info.audio.map((social: any, index: number) => (
+              <MP3
+                number={index}
+                key={social._id}
+                data={social}
+                socialType="audio"
+                parentId={parentId}
+              />
+            ))}
+        </div>
+
+        {/* Video */}
+        <div className="mt-5 mb-5 w-full">
+          {info.video &&
+            info.video.map((social: any, index: number) => (
+              <div key={index}>
+                <video
+                  className="w-full h-80 max-w-full border border-gray-200 rounded-lg dark:border-gray-700"
+                  controls
+                >
+                  <source src={social.link} type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            ))}
+        </div>
+
+        {/* Embeded Link */}
+        <div className="w-full">
+          {info?.videoUrl &&
+            info.videoUrl.map((social: any, index: number) => (
+              <div
+                key={index}
+                dangerouslySetInnerHTML={{
+                  __html: social.videoUrl,
+                }}
+              ></div>
+            ))}
+        </div>
+
         <div>
           <Footer brandIcon="/brand-icon.svg" />
         </div>

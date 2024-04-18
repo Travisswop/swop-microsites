@@ -10,6 +10,11 @@ const nextConfig = {
       'ipfs.io',
       '104.248.234.73',
       'nft-cdn.alchemy.com',
+      'cloudinary.com',
+      'nftstorage.link',
+      'cdn.coinranking.com',
+      'dev.apiswop.co',
+      'app.apiswop.co',
     ],
   },
 };

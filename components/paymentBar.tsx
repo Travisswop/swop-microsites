@@ -2,6 +2,9 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface Props {
   data: {
     _id: string;
@@ -39,7 +42,7 @@ const PaymentBar: FC<Props> = ({
 
   const openlink = async () => {
     try {
-      await fetch('https://app.apiswop.co/web/updateCount', {
+      await fetch(`${API_URL}/v1/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

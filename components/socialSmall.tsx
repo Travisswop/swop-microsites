@@ -4,6 +4,9 @@ import Image from 'next/image';
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
 import { motion, Variants } from 'framer-motion';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface Props {
   data: {
     _id: string;
@@ -19,6 +22,24 @@ interface Props {
   parentId: string;
   number: number;
 }
+
+interface SocialInputTypes {
+  [key: string]: string;
+}
+
+const socialInputTypes: SocialInputTypes = {
+  TikTok: 'username',
+  Instagram: 'username',
+  Facebook: 'username',
+  Twitter: 'username',
+  Snapchat: 'username',
+  Github: 'username',
+  'Linked In': 'username',
+  YouTube: 'link',
+  Bluesky: 'link',
+  Rumble: 'link',
+  Truth: 'link',
+};
 
 const variants = {
   hidden: { opacity: 0, x: 0, y: 25 },
@@ -45,7 +66,7 @@ const SocialSmall: FC<Props> = ({
 
   const openlink = async () => {
     try {
-      await fetch('https://app.apiswop.co/web/updateCount', {
+      fetch(`${API_URL}/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -62,52 +83,32 @@ const SocialSmall: FC<Props> = ({
     }
 
     switch (group) {
-      case 'social':
-        if (name === 'YouTube') {
+      case 'Social Media':
+        if (socialInputTypes[name] === 'link') {
           return window.open(value, '_self');
+        }
+        if (name === 'Linked In') {
+          return window.open(`https://${url}/in/${value}`, '_self');
         }
         if (name === 'Snapchat') {
           return window.open(`${url}/add/${value}`, '_self');
         }
-        return window.open(`${url}${value}`, '_self');
-
+        return window.open(`https://${url}/${value}`, '_self');
         break;
-      case 'contact':
-        if (name === 'WhatsApp') {
+      case 'Commands':
+        if (name === 'Email') {
+          return window.open(`mailto:${value}`, '_self');
+        }
+        return window.open(value, '_self');
+        break;
+      case 'Chat Links':
+        if (name === 'Whatsapp') {
           return window.open(`https://wa.me/${value}?`, '_self');
         }
-        if (name === 'FaceTime') {
-          return window.open(value, '_self');
+        if (name === 'Telegram') {
+          return window.open(`https://t.me/${value}?`, '_self');
         }
-        if (name === 'Address') {
-          const urllink = `https://maps.google.com/maps?q=${value}`;
-          return window.open(urllink, '_self');
-        }
-        return window.open(`${url}${value}`, '_self');
-        break;
-      case 'music':
-        return window.open(value, '_self');
-        break;
-      case 'payment':
-        if (name === 'Venmo') {
-          return window.open(
-            `https://venmo.com/${value}?txn=0`,
-            '_self'
-          );
-        }
-        if (name === 'CashApp') {
-          return window.open(`${url}${value}/0`, '_self');
-        }
-        return window.open(value, '_self');
-        break;
-      case 'crypto':
-        navigator.clipboard.writeText(value);
-        toast({
-          title: 'Copied to clipboard',
-        });
-        break;
-      case 'more':
-        return window.open(value, '_self');
+        return window.open(`${value}`, '_self');
         break;
       default:
         return window.open(value, '_self');
@@ -116,6 +117,8 @@ const SocialSmall: FC<Props> = ({
   };
 
   const delay = 0.5;
+
+  const trimIcon = iconName.toLowerCase().trim().replace(' ', '');
 
   return (
     <motion.div
@@ -139,18 +142,25 @@ const SocialSmall: FC<Props> = ({
         }}
         className="flex rounded-full cursor-pointer "
       >
-        <div>
+        <div
+          style={{
+            position: 'relative',
+            width: '25px',
+            height: '25px',
+          }}
+        >
           <Image
-            className="object-fill w-12 h-12 rounded-full"
             src={
               iconPath
                 ? iconPath
-                : `/images/social_logo/${iconName.toLowerCase()}.svg`
+                : `/images/small-icons/black/${trimIcon}.png`
             }
             alt={iconName}
-            width={20}
-            height={20}
-            priority
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'contain',
+            }}
           />
         </div>
       </motion.div>

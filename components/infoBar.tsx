@@ -4,6 +4,7 @@ import { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 interface Props {
   data: {
     _id: string;
@@ -45,7 +46,7 @@ const InfoBar: FC<Props> = ({
 
   const openlink = async () => {
     try {
-      await fetch('https://app.apiswop.co/web/updateCount', {
+      await fetch(`${API_URL}/v1/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -63,7 +64,10 @@ const InfoBar: FC<Props> = ({
     return window.open(link, '_self');
   };
 
-  const delay = number + 1 * 0.1;
+  const delay = number + 0.1;
+
+  const trimIcon = iconName.toLowerCase().trim().replace(' ', '');
+
   return (
     <motion.div
       initial="hidden"
@@ -92,16 +96,16 @@ const InfoBar: FC<Props> = ({
             src={
               iconPath
                 ? iconPath
-                : `/images/social_logo/${iconName.toLowerCase()}.svg`
+                : `/images/social_logo/${trimIcon}.svg`
             }
-            alt="Twitter Logo"
+            alt={iconName}
             width={80}
             height={80}
             priority
           />
         </div>
-        <div>
-          <div className="text-md font-semibold">{title}</div>
+        <div className="max-w-xs overflow-hidden">
+          <div className="text-md font-semibold">{iconName}</div>
           <div className="text-xs">{description}</div>
         </div>
       </motion.div>

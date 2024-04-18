@@ -3,6 +3,7 @@ import { FC } from 'react';
 import Image from 'next/image';
 import { downloadVCard } from '../lib/vCardUtils';
 import { motion } from 'framer-motion';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 interface Props {
   data: {
     _id: string;
@@ -37,7 +38,7 @@ const download = async (data: any, parentId: string) => {
   document.body.removeChild(a);
 
   try {
-    await fetch('https://app.apiswop.co/web/updateCount', {
+    await fetch(`${API_URL}/v1/web/updateCount`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
@@ -95,7 +96,7 @@ const Contact: FC<Props> = ({
         <div>
           <Image
             className="object-fill w-20 h-20  rounded-[12px]"
-            src="/contacts-ios.svg"
+            src="/images/outline-icons/contact.svg"
             alt={name}
             width={80}
             height={80}

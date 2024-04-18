@@ -13,6 +13,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/components/ui/use-toast';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 const wait = () =>
   new Promise((resolve) => setTimeout(resolve, 2500));
 
@@ -48,7 +51,7 @@ const Subscribe: FC<Props> = ({ data, handler }) => {
       },
     };
     const response = await fetch(
-      'https://app.apiswop.co/web/subscribe',
+      `${API_URL}/v1/web/subscribe`,
       option
     );
     const result = await response.json();

@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useToast } from '@/components/ui/use-toast';
 import { motion, Variants } from 'framer-motion';
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 interface Props {
   data: {
     _id: string;
@@ -47,7 +49,7 @@ const SocialLarge: FC<Props> = ({
 
   const openlink = async () => {
     try {
-      await fetch('https://app.apiswop.co/web/updateCount', {
+      await fetch(`${API_URL}/v1/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -118,6 +120,9 @@ const SocialLarge: FC<Props> = ({
   };
 
   const delay = 0.5;
+
+  const trimIcon = iconName.toLowerCase().trim().replace(' ', '');
+
   return (
     <motion.div
       initial="hidden"
@@ -145,7 +150,7 @@ const SocialLarge: FC<Props> = ({
           src={
             iconPath
               ? iconPath
-              : `/images/social_logo/${iconName.toLowerCase()}.svg`
+              : `/images/social_logo/${trimIcon}.svg`
           }
           alt={iconName}
           width={130}

@@ -6,7 +6,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { motion, Variants } from 'framer-motion';
 interface Props {
   name: string;
-  bio: number;
+  bio: string;
 }
 
 const variants = {
@@ -26,7 +26,7 @@ const Bio: FC<Props> = ({ name, bio }) => {
         type: 'easeInOut',
       }}
     >
-      <h1 className="text-2xl sm:text-3xl font-bold text-center">
+      <h1 className="text-xl sm:text-2xl font-bold text-center">
         {name}
       </h1>
       <div className="text-sm sm:text-md text-center">{bio}</div>

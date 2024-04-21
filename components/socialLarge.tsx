@@ -29,6 +29,26 @@ const variants = {
   exit: { opacity: 0, x: -0, y: 25 },
 };
 
+interface SocialInputTypes {
+  [key: string]: string;
+}
+
+const socialInputTypes: SocialInputTypes = {
+  Twitter: 'username',
+  'Linked In': 'username',
+  YouTube: 'link',
+  Domus: 'link',
+  Bluesky: 'link',
+  Facebook: 'username',
+  Github: 'link',
+  Instagram: 'username',
+  Rumble: 'link',
+  TikTok: 'username',
+  Truth: 'link',
+  Threads: 'link',
+  Snapchat: 'username',
+};
+
 const SocialLarge: FC<Props> = ({
   data,
   socialType,
@@ -66,20 +86,42 @@ const SocialLarge: FC<Props> = ({
     }
 
     switch (group) {
-      case 'social':
-        if (name === 'YouTube') {
+      case 'Social Media':
+        if (socialInputTypes[name] === 'link') {
           return window.open(value, '_self');
+        }
+        if (name === 'Linked In') {
+          return window.open(`https://${url}/in/${value}`, '_self');
         }
         if (name === 'Snapchat') {
           return window.open(`${url}/add/${value}`, '_self');
         }
-        return window.open(`${url}${value}`, '_self');
+        return window.open(`https://${url}/${value}`, '_self');
+      case 'Dapps':
+        return window.open(value, '_self');
 
+      case 'App Links':
+        return window.open(value, '_self');
         break;
-      case 'contact':
-        if (name === 'WhatsApp') {
+      case 'Music/Video Links':
+        return window.open(value, '_self');
+      case 'Chat Links':
+        if (name === 'Whatsapp') {
           return window.open(`https://wa.me/${value}?`, '_self');
         }
+        if (name === 'Telegram') {
+          return window.open(`https://t.me/${value}?`, '_self');
+        }
+        return window.open(`${value}`, '_self');
+      case 'General Links':
+        return window.open(value, '_self');
+      case 'Copy Address':
+        navigator.clipboard.writeText(value);
+        toast({
+          title: 'Copied to clipboard',
+        });
+        break;
+      case 'Command/Action':
         if (name === 'FaceTime') {
           return window.open(value, '_self');
         }
@@ -88,31 +130,6 @@ const SocialLarge: FC<Props> = ({
           return window.open(urllink, '_self');
         }
         return window.open(`${url}${value}`, '_self');
-        break;
-      case 'music':
-        return window.open(value, '_self');
-        break;
-      case 'payment':
-        if (name === 'Venmo') {
-          return window.open(
-            `https://venmo.com/${value}?txn=0`,
-            '_self'
-          );
-        }
-        if (name === 'CashApp') {
-          return window.open(`${url}${value}/0`, '_self');
-        }
-        return window.open(value, '_self');
-        break;
-      case 'crypto':
-        navigator.clipboard.writeText(value);
-        toast({
-          title: 'Copied to clipboard',
-        });
-        break;
-      case 'more':
-        return window.open(value, '_self');
-        break;
       default:
         return window.open(value, '_self');
         break;

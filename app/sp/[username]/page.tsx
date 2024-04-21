@@ -144,6 +144,10 @@ export default async function PublicProfile({ params }: PageProps) {
     );
   }
 
+  console.log(
+    info?.socialLarge.filter((item: any) => item.group === 'Dapps')
+  );
+
   return (
     <>
       {theme && (
@@ -173,7 +177,9 @@ export default async function PublicProfile({ params }: PageProps) {
         <div className="my-4">
           <Bio name={name} bio={bio} />
         </div>
-        <div className="flex flex-row flex-wrap justify-evenly gap-6 px-6 py-2">
+
+        {/* Social Media Small */}
+        {/* <div className="flex flex-row flex-wrap justify-evenly gap-6 px-6 py-2">
           {info?.socialTop &&
             info.socialTop.map((social: any, index: number) => (
               <SocialSmall
@@ -184,10 +190,10 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+        </div> */}
 
         {/* Blog */}
-        <div className="w-full mt-8">
+        {/* <div className="w-full mt-8">
           {info?.blog &&
             info.blog.map((social: any, index: number) => (
               <Blog
@@ -198,7 +204,7 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+        </div> */}
 
         {/* Social Media Big */}
         <div className="flex flex-row flex-wrap justify-evenly gap-4 sm:gap-10 my-8">
@@ -215,7 +221,7 @@ export default async function PublicProfile({ params }: PageProps) {
         </div>
 
         {/* Redeem Link */}
-        <div className="w-full">
+        {/* <div className="w-full">
           {info?.redeemLink &&
             info.redeemLink.map((social: any, index: number) => (
               <Redeem
@@ -226,10 +232,10 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+        </div> */}
 
         {/* Referral Code */}
-        <div className="w-full">
+        {/* <div className="w-full">
           {info?.referral &&
             info.referral.map((social: any, index: number) => (
               <Referral
@@ -240,10 +246,10 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+        </div> */}
 
         {/* Ens Domain */}
-        <div className="w-full">
+        {/* <div className="w-full">
           {info?.ensDomain &&
             info.ensDomain.map((social: any, index: number) => (
               <Ens
@@ -254,10 +260,10 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+        </div> */}
 
         {/* Contact card */}
-        <div className="w-full">
+        {/* <div className="w-full">
           {info?.contact &&
             info.contact.map((social: any, index: number) => (
               <Contact
@@ -268,10 +274,10 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+        </div> */}
 
         {/* InfoBar */}
-        <div className="w-full">
+        {/* <div className="w-full">
           {info?.infoBar &&
             info.infoBar.map((social: any, index: number) => (
               <InfoBar
@@ -282,10 +288,10 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+        </div> */}
 
         {/* Product Payment */}
-        <div className="w-full">
+        {/* <div className="w-full">
           {info?.product &&
             info.product.map((social: any, index: number) => (
               <PaymentBar
@@ -296,10 +302,10 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+        </div> */}
 
         {/* Audio */}
-        <div className="w-full">
+        {/* <div className="w-full">
           {info?.audio &&
             info.audio.map((social: any, index: number) => (
               <MP3
@@ -310,10 +316,10 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+        </div> */}
 
         {/* Video */}
-        <div className="mt-5 mb-5 w-full">
+        {/* <div className="mt-5 mb-5 w-full">
           {info.video &&
             info.video.map((social: any, index: number) => (
               <div key={index}>
@@ -326,10 +332,10 @@ export default async function PublicProfile({ params }: PageProps) {
                 </video>
               </div>
             ))}
-        </div>
+        </div> */}
 
         {/* Embeded Link */}
-        <div className="w-full">
+        {/* <div className="w-full">
           {info?.videoUrl &&
             info.videoUrl.map((social: any, index: number) => (
               <div
@@ -339,7 +345,7 @@ export default async function PublicProfile({ params }: PageProps) {
                 }}
               ></div>
             ))}
-        </div>
+        </div> */}
 
         <div>
           <Footer brandIcon="/brand-icon.svg" />

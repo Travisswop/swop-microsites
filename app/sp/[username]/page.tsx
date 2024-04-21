@@ -36,7 +36,7 @@ interface PageProps {
 }
 
 async function getUserData(username: string) {
-  const res = await fetch(`${API_URL}/api/v1/web/user/${username}`, {
+  const res = await fetch(`${API_URL}/api/v2/web/user/${username}`, {
     next: { revalidate: 0 },
   });
   const data = await res.json();
@@ -52,7 +52,7 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const res = await fetch(
-    `${API_URL}/api/v1/web/user/${params.username}`
+    `${API_URL}/api/v2/web/user/${params.username}`
   );
 
   const { data } = (await res.json()) as User;

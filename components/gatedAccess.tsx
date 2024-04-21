@@ -55,6 +55,8 @@ const override: CSSProperties = {
   borderColor: 'red',
 };
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
 const GatedAccess: FC<Props> = ({ data }) => {
   const {
     contractAddress,
@@ -83,7 +85,7 @@ const GatedAccess: FC<Props> = ({ data }) => {
 
     try {
       const res = await fetch(
-        `https://app.apiswop.co/api/v2/web/isTokenHolder/${address}/${contractAddress}/${network}`
+        `${API_URL}/api/v2/web/isTokenHolder/${address}/${contractAddress}/${network}`
       );
       const data = await res.json();
       console.log(
@@ -130,13 +132,13 @@ const GatedAccess: FC<Props> = ({ data }) => {
         >
           Purchase Access
         </Link>
-        <div className="border-4 w-2/3 rounded-lg border-white shadow-lg mx-auto">
+        <div className=" rounded-lg  shadow-lg mx-auto">
           <Image
-            className="object-fill w-full h-full rounded-lg"
+            className="object-fill rounded-lg"
             src={image}
             alt={title}
-            width={220}
-            height={220}
+            width={100}
+            height={100}
             priority
           />
         </div>

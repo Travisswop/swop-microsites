@@ -69,7 +69,7 @@ const SocialLarge: FC<Props> = ({
 
   const openlink = async () => {
     try {
-      await fetch(`${API_URL}/v1/web/updateCount`, {
+      fetch(`${API_URL}/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -97,14 +97,6 @@ const SocialLarge: FC<Props> = ({
           return window.open(`${url}/add/${value}`, '_self');
         }
         return window.open(`https://${url}/${value}`, '_self');
-      case 'Dapps':
-        return window.open(value, '_self');
-
-      case 'App Links':
-        return window.open(value, '_self');
-        break;
-      case 'Music/Video Links':
-        return window.open(value, '_self');
       case 'Chat Links':
         if (name === 'Whatsapp') {
           return window.open(`https://wa.me/${value}?`, '_self');
@@ -113,8 +105,6 @@ const SocialLarge: FC<Props> = ({
           return window.open(`https://t.me/${value}?`, '_self');
         }
         return window.open(`${value}`, '_self');
-      case 'General Links':
-        return window.open(value, '_self');
       case 'Copy Address':
         navigator.clipboard.writeText(value);
         toast({
@@ -122,17 +112,30 @@ const SocialLarge: FC<Props> = ({
         });
         break;
       case 'Command/Action':
-        if (name === 'FaceTime') {
-          return window.open(value, '_self');
+        if (name === 'Email') {
+          return window.open(`mailto:${value}`, '_self');
         }
-        if (name === 'Address') {
-          const urllink = `https://maps.google.com/maps?q=${value}`;
-          return window.open(urllink, '_self');
+        if (name === 'Call') {
+          return window.open(`tel:${value}`, '_self');
         }
-        return window.open(`${url}${value}`, '_self');
+        if (name === 'Text Message') {
+          return window.open(`sms:${value}`, '_self');
+        }
+
+        if (
+          name === 'Send Crypto' ||
+          name === 'ENS Message' ||
+          name === 'Copy'
+        ) {
+          navigator.clipboard.writeText(value);
+          toast({
+            title: 'Copied to clipboard',
+          });
+          break;
+        }
+        return window.open(value, '_self');
       default:
         return window.open(value, '_self');
-        break;
     }
   };
 

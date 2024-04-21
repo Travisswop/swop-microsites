@@ -3,6 +3,7 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useToast } from '@/components/ui/use-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 interface Props {
@@ -27,6 +28,26 @@ const variants = {
   exit: { opacity: 0, x: -0, y: 25 },
 };
 
+interface SocialInputTypes {
+  [key: string]: string;
+}
+
+const socialInputTypes: SocialInputTypes = {
+  Twitter: 'username',
+  'Linked In': 'username',
+  YouTube: 'link',
+  Domus: 'link',
+  Bluesky: 'link',
+  Facebook: 'username',
+  Github: 'link',
+  Instagram: 'username',
+  Rumble: 'link',
+  TikTok: 'username',
+  Truth: 'link',
+  Threads: 'link',
+  Snapchat: 'username',
+};
+
 const InfoBar: FC<Props> = ({
   data,
   socialType,
@@ -44,9 +65,11 @@ const InfoBar: FC<Props> = ({
     group,
   } = data;
 
+  const { toast } = useToast();
+
   const openlink = async () => {
     try {
-      await fetch(`${API_URL}/v1/web/updateCount`, {
+      fetch(`${API_URL}/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
@@ -61,7 +84,59 @@ const InfoBar: FC<Props> = ({
     } catch (err) {
       console.log(err);
     }
-    return window.open(link, '_self');
+
+    switch (group) {
+      case 'Social Media':
+        if (socialInputTypes[iconName] === 'link') {
+          return window.open(title, '_self');
+        }
+        if (iconName === 'Linked In') {
+          return window.open(`https://${link}/in/${title}`, '_self');
+        }
+        if (iconName === 'Snapchat') {
+          return window.open(`${link}/add/${title}`, '_self');
+        }
+        return window.open(`https://${link}/${title}`, '_self');
+      case 'Chat Links':
+        if (iconName === 'Whatsapp') {
+          return window.open(`https://wa.me/${title}?`, '_self');
+        }
+        if (iconName === 'Telegram') {
+          return window.open(`https://t.me/${title}?`, '_self');
+        }
+        return window.open(`${title}`, '_self');
+      case 'Copy Address':
+        navigator.clipboard.writeText(title);
+        toast({
+          title: 'Copied to clipboard',
+        });
+        break;
+      case 'Command/Action':
+        if (iconName === 'Email') {
+          return window.open(`mailto:${title}`, '_self');
+        }
+        if (iconName === 'Call') {
+          return window.open(`tel:${title}`, '_self');
+        }
+        if (iconName === 'Text Message') {
+          return window.open(`sms:${title}`, '_self');
+        }
+
+        if (
+          iconName === 'Send Crypto' ||
+          iconName === 'ENS Message' ||
+          iconName === 'Copy'
+        ) {
+          navigator.clipboard.writeText(title);
+          toast({
+            title: 'Copied to clipboard',
+          });
+          break;
+        }
+        return window.open(title, '_self');
+      default:
+        return window.open(title, '_self');
+    }
   };
 
   const delay = number + 0.1;

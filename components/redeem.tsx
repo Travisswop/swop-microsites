@@ -51,7 +51,7 @@ const Redeem: FC<Props> = ({
 
   const openlink = async () => {
     try {
-      await fetch(`${API_URL}/v1/web/updateCount`, {
+      fetch(`${API_URL}/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

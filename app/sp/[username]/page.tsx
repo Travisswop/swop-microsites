@@ -10,7 +10,6 @@ import SocialLarge from '@/components/socialLarge';
 import SocialSmall from '@/components/socialSmall';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Toaster } from '@/components/ui/toaster';
-import Video from '@/components/video';
 import { Metadata } from 'next';
 import Custom404 from './404';
 import Image from 'next/image';

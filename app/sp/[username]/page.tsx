@@ -23,6 +23,7 @@ import Blog from '@/components/blog';
 import MP3 from '@/components/mp3';
 import Referral from '@/components/referral';
 import Redeem from '@/components/redeem';
+import EmbedVideo from '@/components/embedvideo';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -175,9 +176,9 @@ export default async function PublicProfile({ params }: PageProps) {
         </div>
 
         {/* Social Media Small */}
-        <div className="flex flex-row flex-wrap justify-evenly gap-6 px-6 py-2">
-          {info?.socialTop &&
-            info.socialTop.map((social: any, index: number) => (
+        {info?.socialTop && info.socialTop.length > 0 && (
+          <div className="flex flex-row flex-wrap justify-evenly gap-6 px-6 py-2">
+            {info.socialTop.map((social: any, index: number) => (
               <SocialSmall
                 number={index}
                 key={social.name}
@@ -186,12 +187,13 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Blog */}
-        <div className="w-full mt-8">
-          {info?.blog &&
-            info.blog.map((social: any, index: number) => (
+        {info?.blog && info.blog.length > 0 && (
+          <div className="w-full mt-8">
+            {info.blog.map((social: any, index: number) => (
               <Blog
                 number={index}
                 key={social._id}
@@ -200,12 +202,12 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
-
+          </div>
+        )}
         {/* Social Media Big */}
-        <div className="flex flex-row flex-wrap justify-evenly gap-4 sm:gap-10 my-8">
-          {info?.socialLarge &&
-            info.socialLarge.map((social: any, index: number) => (
+        {info?.socialLarge && info.socialLarge.length > 0 && (
+          <div className="flex flex-row flex-wrap justify-evenly gap-4 sm:gap-10 my-8">
+            {info.socialLarge.map((social: any, index: number) => (
               <SocialLarge
                 number={index}
                 key={index}
@@ -214,12 +216,13 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Redeem Link */}
-        <div className="w-full">
-          {info?.redeemLink &&
-            info.redeemLink.map((social: any, index: number) => (
+        {info?.redeemLink && info.redeemLink.length > 0 && (
+          <div className="w-full">
+            {info.redeemLink.map((social: any, index: number) => (
               <Redeem
                 number={index}
                 key={social._id}
@@ -228,12 +231,13 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Referral Code */}
-        <div className="w-full">
-          {info?.referral &&
-            info.referral.map((social: any, index: number) => (
+        {info.referral && info.referral.length > 0 && (
+          <div className="w-full">
+            {info.referral.map((social: any, index: number) => (
               <Referral
                 number={index}
                 key={social._id}
@@ -242,12 +246,13 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Ens Domain */}
-        <div className="w-full">
-          {info?.ensDomain &&
-            info.ensDomain.map((social: any, index: number) => (
+        {info?.ensDomain && info.ensDomain.length > 0 && (
+          <div className="w-full">
+            {info.ensDomain.map((social: any, index: number) => (
               <Ens
                 number={index}
                 key={social._id}
@@ -256,12 +261,13 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Contact card */}
-        <div className="w-full">
-          {info?.contact &&
-            info.contact.map((social: any, index: number) => (
+        {info?.contact && info.contact.length > 0 && (
+          <div className="w-full">
+            {info.contact.map((social: any, index: number) => (
               <Contact
                 number={index}
                 key={social._id}
@@ -270,12 +276,13 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+          </div>
+        )}
 
         {/* InfoBar */}
-        <div className="w-full">
-          {info?.infoBar &&
-            info.infoBar.map((social: any, index: number) => (
+        {info?.infoBar && info.infoBar.length > 0 && (
+          <div className="w-full">
+            {info.infoBar.map((social: any, index: number) => (
               <InfoBar
                 number={index}
                 key={social._id}
@@ -284,12 +291,13 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Product Payment */}
-        <div className="w-full">
-          {info?.product &&
-            info.product.map((social: any, index: number) => (
+        {info?.product && info.product.length > 0 && (
+          <div className="w-full">
+            {info.product.map((social: any, index: number) => (
               <PaymentBar
                 number={index}
                 key={social._id}
@@ -298,12 +306,13 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Audio */}
-        <div className="w-full">
-          {info?.audio &&
-            info.audio.map((social: any, index: number) => (
+        {info?.audio && info.audio.length > 0 && (
+          <div className="w-full">
+            {info.audio.map((social: any, index: number) => (
               <MP3
                 number={index}
                 key={social._id}
@@ -312,12 +321,13 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Video */}
-        <div className="mt-5 mb-5 w-full">
-          {info.video &&
-            info.video.map((social: any, index: number) => (
+        {info?.video && info.video.length > 0 && (
+          <div className="mt-5 mb-5 w-full">
+            {info.video.map((social: any, index: number) => (
               <div key={index}>
                 <video
                   className="w-full h-80 max-w-full border border-gray-200 rounded-lg dark:border-gray-700"
@@ -328,21 +338,25 @@ export default async function PublicProfile({ params }: PageProps) {
                 </video>
               </div>
             ))}
-        </div>
+          </div>
+        )}
 
         {/* Embeded Link */}
-        <div className="w-full">
-          {info?.videoUrl &&
-            info.videoUrl.map((social: any, index: number) => (
-              <div
-                key={index}
-                dangerouslySetInnerHTML={{
-                  __html: social.videoUrl,
-                }}
-              ></div>
+        {info?.videoUrl && info.videoUrl.length > 0 && (
+          <div className="w-full">
+            {info.videoUrl.map((social: any, index: number) => (
+              <EmbedVideo
+                number={index}
+                key={social._id}
+                data={social}
+                socialType="videoUrl"
+                parentId={parentId}
+              />
             ))}
-        </div>
+          </div>
+        )}
 
+        {/* Message */}
         <div>
           <Footer brandIcon="/brand-icon.svg" />
         </div>

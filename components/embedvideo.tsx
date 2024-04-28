@@ -3,17 +3,19 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { Tweet } from 'react-tweet';
+import {
+  TikTokEmbed,
+  XEmbed,
+  YouTubeEmbed,
+} from 'react-social-media-embed';
 
 interface Props {
   data: {
     _id: string;
     micrositeId: string;
-    title: string;
-    link: string;
-    description: string;
-    iconName: string;
-    iconPath: string;
-    group: string;
+    type: string;
+    videoUrl: string;
   };
   socialType: string;
   parentId: string;
@@ -26,12 +28,21 @@ const variants = {
   exit: { opacity: 0, x: -0, y: 25 },
 };
 
-const EmbedVideo: FC<Props> = ({ data, number }) => {
-  const { description, iconName, iconPath } = data;
+const EmbedVideo: FC<Props> = async ({ data, number }) => {
+  const { type, videoUrl } = data;
 
-  const delay = number + 0.1;
+  let spotifyUrl;
 
-  const trimIcon = iconName.toLowerCase().trim().replace(' ', '');
+  if (type === 'spotify') {
+    const url = new URL(videoUrl);
+    // https://open.spotify.com/playlist/37i9dQZF1DWUACcBjzMiIY?si=DP--7-zwR3CfUURp-xEnuA
+    // Remove any additional path segments
+    url.pathname = url.pathname.replace(/\/intl-\w+\//, '/');
+    // Replace with embed URL
+    spotifyUrl = url
+      .toString()
+      .replace('open.spotify.com', 'open.spotify.com/embed');
+  }
 
   return (
     <motion.div
@@ -41,37 +52,49 @@ const EmbedVideo: FC<Props> = ({ data, number }) => {
       variants={variants}
       transition={{
         duration: 0.4,
-        delay,
         type: 'easeInOut',
       }}
+      className="mt-3"
     >
       <motion.div
-        whileHover={{ scale: 1.05 }}
+        whileHover={{ scale: 1.01 }}
         transition={{
           type: 'spring',
           stiffness: 400,
           damping: 10,
         }}
-        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-3 rounded-[12px]"
       >
-        <div>
-          <Image
-            className="object-fill w-20 h-20 rounded-[12px]"
-            src={
-              iconPath
-                ? iconPath
-                : `/images/social_logo/${trimIcon}.svg`
-            }
-            alt={iconName}
-            width={80}
-            height={80}
-            priority
-          />
-        </div>
-        <div className="max-w-xs overflow-hidden">
-          <div className="text-md font-semibold">{iconName}</div>
-          <div className="text-xs">{description}</div>
-        </div>
+        {type === 'twitter' ? (
+          // <div data-theme="light">
+          //   <Tweet id={videoId} />
+          // </div>
+          <div style={{}}>
+            <XEmbed url={videoUrl} />
+          </div>
+        ) : type === 'tiktok' ? (
+          <div style={{}}>
+            <TikTokEmbed url="https://www.tiktok.com/@shadin_14/video/7028187278933544219" />
+          </div>
+        ) : type === 'youtube' ? (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <YouTubeEmbed url={videoUrl} width="415" height="315" />
+          </div>
+        ) : type === 'spotify' ? (
+          <div>
+            <iframe
+              src={spotifyUrl}
+              width="415"
+              height="380"
+              allow="encrypted-media"
+            ></iframe>
+          </div>
+        ) : (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: videoUrl,
+            }}
+          ></div>
+        )}
       </motion.div>
     </motion.div>
   );

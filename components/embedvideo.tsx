@@ -73,27 +73,28 @@ const EmbedVideo: FC<Props> = async ({ data, number }) => {
           </div>
         ) : type === 'tiktok' ? (
           <div style={{}}>
-            <TikTokEmbed url="https://www.tiktok.com/@shadin_14/video/7028187278933544219" />
+            <TikTokEmbed url={videoUrl} />
           </div>
         ) : type === 'youtube' ? (
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="w-full overflow-hidden flex flex-col bg-white justify-center rounded-lg">
             <YouTubeEmbed url={videoUrl} width="415" height="315" />
           </div>
         ) : type === 'spotify' ? (
-          <div>
+          <div className="w-full overflow-hidden flex flex-col  justify-center ">
             <iframe
               src={spotifyUrl}
-              width="415"
-              height="380"
+              height={400}
               allow="encrypted-media"
             ></iframe>
           </div>
         ) : (
-          <div
-            dangerouslySetInnerHTML={{
-              __html: videoUrl,
-            }}
-          ></div>
+          <div className="w-full overflow-hidden flex flex-col bg-white justify-center rounded-md">
+            <div
+              dangerouslySetInnerHTML={{
+                __html: videoUrl,
+              }}
+            ></div>
+          </div>
         )}
       </motion.div>
     </motion.div>

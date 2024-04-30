@@ -1,25 +1,126 @@
-"use client";
-import { toast } from "@/components/ui/use-toast";
-import { downloadVCard } from "@/lib/vCardUtils";
-import { FC } from "react";
+'use client';
+import { toast } from '@/components/ui/use-toast';
+import { downloadVCard } from '@/lib/vCardUtils';
+import { FC } from 'react';
+
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 interface Props {
   data: any;
 }
+
+interface SocialInputTypes {
+  [key: string]: string;
+}
+
+const socialInputTypes: SocialInputTypes = {
+  Twitter: 'username',
+  'Linked In': 'username',
+  YouTube: 'link',
+  Domus: 'link',
+  Bluesky: 'link',
+  Facebook: 'username',
+  Github: 'link',
+  Instagram: 'username',
+  Rumble: 'link',
+  TikTok: 'username',
+  Truth: 'link',
+  Threads: 'link',
+  Snapchat: 'username',
+};
+
+// const openLink = async (
+//   social: any,
+//   parentId: string | undefined,
+//   socialType: string | undefined
+// ) => {
+//   const { _id, group, name, value, url } = social;
+
+//   try {
+//     await fetch("https://app.apiswop.co/web/updateCount", {
+//       method: "POST",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify({
+//         socialType,
+//         socialId: _id,
+//         parentId,
+//       }),
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   if (typeof window === "undefined") {
+//     return;
+//   }
+//   switch (group) {
+//     case "social":
+//       if (name === "YouTube" || name === "Github") {
+//         return window.open(value, "_self");
+//       }
+//       if (name === "Snapchat") {
+//         return window.open(`${url}/add/${value}`, "_self");
+//       }
+//       return window.open(`${url}${value}`, "_self");
+
+//     case "contact":
+//       if (name === "Whatsapp") {
+//         return window.open(`https://wa.me/${value}?`, "_self");
+//       }
+//       if (name === "FaceTime") {
+//         return window.open(value, "_self");
+//       }
+//       if (name === "Address") {
+//         const urllink = `https://maps.google.com/maps?q=${value}`;
+//         return window.open(urllink, "_self");
+//       }
+//       return window.open(`${url}${value}`, "_self");
+
+//     case "music":
+//       return window.open(value, "_self");
+
+//     case "payment":
+//       if (name === "Venmo") {
+//         return window.open(`https://venmo.com/${value}?txn=0`, "_self");
+//       }
+//       if (name === "CashApp") {
+//         return window.open(`${url}${value}/0`, "_self");
+//       }
+//       return window.open(value, "_self");
+
+//     case "crypto":
+//       navigator.clipboard.writeText(value);
+//       toast({
+//         title: "Copied to clipboard",
+//       });
+//       return;
+//     case "more":
+//       return window.open(value, "_self");
+
+//     default:
+//       return window.open(value, "_self");
+//   }
+// };
 
 const openLink = async (
   social: any,
   parentId: string | undefined,
   socialType: string | undefined
 ) => {
-  const { _id, group, name, value, url } = social;
-
+  let { _id, group, name, value, url, link, title, iconName } =
+    social;
+  console.log('social', social);
+  url = url || link;
+  value = value || title;
+  name = name || iconName;
   try {
-    await fetch("https://app.apiswop.co/web/updateCount", {
-      method: "POST",
+    fetch(`${API_URL}/web/updateCount`, {
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         socialType,
@@ -30,65 +131,90 @@ const openLink = async (
   } catch (err) {
     console.log(err);
   }
-  if (typeof window === "undefined") {
-    return;
-  }
+
   switch (group) {
-    case "social":
-      if (name === "YouTube" || name === "Github") {
-        return window.open(value, "_self");
+    case 'Social Media':
+      if (socialInputTypes[name] === 'link') {
+        return window.open(value, '_self');
       }
-      if (name === "Snapchat") {
-        return window.open(`${url}/add/${value}`, "_self");
+      if (name === 'Linked In') {
+        return window.open(`https://${url}/in/${value}`, '_self');
       }
-      return window.open(`${url}${value}`, "_self");
-
-    case "contact":
-      if (name === "Whatsapp") {
-        return window.open(`https://wa.me/${value}?`, "_self");
+      if (name === 'Snapchat') {
+        return window.open(`${url}/add/${value}`, '_self');
       }
-      if (name === "FaceTime") {
-        return window.open(value, "_self");
+      return window.open(`https://${url}/${value}`, '_self');
+    case 'Chat Links':
+      if (name === 'Whatsapp') {
+        return window.open(`https://wa.me/${value}?`, '_self');
       }
-      if (name === "Address") {
-        const urllink = `https://maps.google.com/maps?q=${value}`;
-        return window.open(urllink, "_self");
+      if (name === 'Telegram') {
+        return window.open(`https://t.me/${value}?`, '_self');
       }
-      return window.open(`${url}${value}`, "_self");
-
-    case "music":
-      return window.open(value, "_self");
-
-    case "payment":
-      if (name === "Venmo") {
-        return window.open(`https://venmo.com/${value}?txn=0`, "_self");
-      }
-      if (name === "CashApp") {
-        return window.open(`${url}${value}/0`, "_self");
-      }
-      return window.open(value, "_self");
-
-    case "crypto":
+      return window.open(`${value}`, '_self');
+    case 'Copy Address':
       navigator.clipboard.writeText(value);
       toast({
-        title: "Copied to clipboard",
+        title: 'Copied to clipboard',
       });
-      return;
-    case "more":
-      return window.open(value, "_self");
+      break;
+    case 'Command/Action':
+      if (name === 'Email') {
+        return window.open(`mailto:${value}`, '_self');
+      }
+      if (name === 'Call') {
+        return window.open(`tel:${value}`, '_self');
+      }
+      if (name === 'Text Message') {
+        return window.open(`sms:${value}`, '_self');
+      }
 
+      if (
+        name === 'Send Crypto' ||
+        name === 'ENS Message' ||
+        name === 'Copy'
+      ) {
+        navigator.clipboard.writeText(value);
+        toast({
+          title: 'Copied to clipboard',
+        });
+        break;
+      }
+      return window.open(value, '_self');
+    case 'Commands':
+      if (name === 'Email') {
+        return window.open(`mailto:${value}`, '_self');
+      }
+      if (name === 'Call') {
+        return window.open(`tel:${value}`, '_self');
+      }
+      if (name === 'Text Message') {
+        return window.open(`sms:${value}`, '_self');
+      }
+      if (name === 'Copy') {
+        navigator.clipboard.writeText(value);
+        toast({
+          title: 'Copied to clipboard',
+        });
+        break;
+      }
+      return window.open(value, '_self');
     default:
-      return window.open(value, "_self");
+      return window.open(value, '_self');
   }
 };
 
-const download = async (data: any, parentId: string, socialType: string) => {
+const download = async (
+  data: any,
+  parentId: string,
+  socialType: string
+) => {
   try {
-    await fetch("https://app.apiswop.co/web/updateCount", {
-      method: "POST",
+    await fetch('https://app.apiswop.co/web/updateCount', {
+      method: 'POST',
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         socialType,
@@ -101,12 +227,12 @@ const download = async (data: any, parentId: string, socialType: string) => {
   }
 
   const vCard = await downloadVCard(data);
-  const blob = new Blob([vCard], { type: "text/vcard" });
+  const blob = new Blob([vCard], { type: 'text/vcard' });
   const url = window.URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.setAttribute("hidden", "");
-  a.setAttribute("href", url);
-  a.setAttribute("download", `${data.name}.vcf`);
+  const a = document.createElement('a');
+  a.setAttribute('hidden', '');
+  a.setAttribute('href', url);
+  a.setAttribute('download', `${data.name}.vcf`);
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
@@ -137,7 +263,7 @@ const Redirect: FC<Props> = ({ data }) => {
         (item: { _id: any }) => item._id === direct.socialId
       );
       if (product) {
-        window.open(product.paymentUrl, "_self");
+        window.open(product.paymentUrl, '_self');
       }
     },
     socialLarge: () => {
@@ -153,7 +279,7 @@ const Redirect: FC<Props> = ({ data }) => {
         (item: { _id: any }) => item._id === direct.socialId
       );
       if (infoBar) {
-        window.open(infoBar.link, "_self");
+        openLink(infoBar, parentId, direct.socialTypes);
       }
     },
     video: () => {

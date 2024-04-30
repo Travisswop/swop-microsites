@@ -36,7 +36,7 @@ interface PageProps {
 }
 
 async function getUserData(username: string) {
-  const res = await fetch(`${API_URL}/api/v1/web/user/${username}`, {
+  const res = await fetch(`${API_URL}/api/v2/web/user/${username}`, {
     next: { revalidate: 0 },
   });
   const data = await res.json();

@@ -51,7 +51,7 @@ const Subscribe: FC<Props> = ({ data, handler }) => {
       },
     };
     const response = await fetch(
-      `${API_URL}/v1/web/subscribe`,
+      `${API_URL}/api/v1/web/subscribe`,
       option
     );
     const result = await response.json();

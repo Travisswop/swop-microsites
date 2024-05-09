@@ -31,7 +31,7 @@ export default async function Account() {
           </div>
         </div>
       </div>
-      <Delete data={{ name: 'rakib' }} />
+      <Delete />
 
       <div>
         <Footer brandIcon="/brand-icon.svg" />

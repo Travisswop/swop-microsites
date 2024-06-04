@@ -30,7 +30,7 @@ const variants = {
 
 const EmbedVideo: FC<Props> = async ({ data, number }) => {
   const { type, videoUrl } = data;
-
+  console.log('data', data);
   let spotifyUrl;
 
   if (type === 'spotify') {

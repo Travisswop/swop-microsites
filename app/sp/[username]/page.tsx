@@ -176,7 +176,10 @@ export default async function PublicProfile({ params }: PageProps) {
 
         {/* Social Media Small */}
         {info?.socialTop && info.socialTop.length > 0 && (
-          <div className="flex flex-row flex-wrap justify-evenly gap-6 px-6 py-2">
+          <div
+            className="flex flex-row flex-wrap justify-center
+           gap-8 px-6 py-2"
+          >
             {info.socialTop.map((social: any, index: number) => (
               <SocialSmall
                 number={index}
@@ -325,11 +328,11 @@ export default async function PublicProfile({ params }: PageProps) {
 
         {/* Video */}
         {info?.video && info.video.length > 0 && (
-          <div className="mt-5 mb-5 w-full">
+          <div className="w-full">
             {info.video.map((social: any, index: number) => (
-              <div key={index}>
+              <div key={index} className="mt-5">
                 <video
-                  className="w-full h-80 max-w-full border border-gray-200 rounded-lg dark:border-gray-700"
+                  className="w-full h-76 max-w-full border border-gray-200 rounded-lg dark:border-gray-700"
                   controls
                 >
                   <source src={social.link} type="video/mp4" />

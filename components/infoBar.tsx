@@ -139,7 +139,7 @@ const InfoBar: FC<Props> = ({
     }
   };
 
-  const delay = number + 0.1;
+  // const delay = number / 0.1;
 
   const trimIcon = iconName.toLowerCase().trim().replace(' ', '');
 
@@ -151,7 +151,7 @@ const InfoBar: FC<Props> = ({
       variants={variants}
       transition={{
         duration: 0.4,
-        delay,
+        delay: 0.2,
         type: 'easeInOut',
       }}
     >
@@ -163,11 +163,11 @@ const InfoBar: FC<Props> = ({
           damping: 10,
         }}
         onClick={openlink}
-        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-3 rounded-[12px]"
+        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-2 rounded-[12px]"
       >
         <div>
           <Image
-            className="object-fill w-20 h-20 rounded-[12px]"
+            className="object-fill w-16 h-16 rounded-[12px]"
             src={
               iconPath
                 ? iconPath

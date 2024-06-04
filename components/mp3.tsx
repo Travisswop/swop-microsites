@@ -47,11 +47,11 @@ const MP3: FC<Props> = ({ data, socialType, parentId, number }) => {
           stiffness: 400,
           damping: 10,
         }}
-        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-3 rounded-[12px]"
+        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-2 rounded-[12px]"
       >
         <div>
           <Image
-            className="object-fill w-20 h-20 rounded-[12px]"
+            className="object-fill w-16 h-16 rounded-[12px]"
             src={coverPhoto}
             alt={name}
             width={80}
@@ -60,7 +60,7 @@ const MP3: FC<Props> = ({ data, socialType, parentId, number }) => {
           />
         </div>
         <div className="max-w-xs overflow-hidden">
-          <div className="text-md font-semibold">{name}</div>
+          <div className="text-sm font-semibold">{name}</div>
           <figure>
             <audio controls>
               <source src={fileUrl} type="audio/mpeg" />

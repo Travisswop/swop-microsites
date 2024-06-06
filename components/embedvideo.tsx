@@ -76,11 +76,11 @@ const EmbedVideo: FC<Props> = async ({ data, number }) => {
             <TikTokEmbed url={videoUrl} />
           </div>
         ) : type === 'youtube' ? (
-          <div className="w-full overflow-hidden flex flex-col bg-white justify-center rounded-lg">
+          <div className="w-full overflow-hidden flex flex-col bg-white justify-center rounded-lg shadow-2xl">
             <YouTubeEmbed url={videoUrl} width="415" height="315" />
           </div>
         ) : type === 'spotify' ? (
-          <div className="w-full overflow-hidden flex flex-col  justify-center ">
+          <div className="w-full overflow-hidden flex flex-col  justify-center shadow-2xl">
             <iframe
               src={spotifyUrl}
               height={400}

@@ -71,7 +71,7 @@ const Message: FC<Props> = ({
           damping: 10,
         }}
         onClick={openlink}
-        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-2 rounded-[12px]"
+        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-xl p-2 rounded-[12px]"
       >
         <div>
           <Image

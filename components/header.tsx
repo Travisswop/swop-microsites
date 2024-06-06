@@ -34,7 +34,7 @@ const Header: FC<Props> = ({
 
   const coverPhoto = cover.includes('https')
     ? cover
-    : `/images/coverphoto/${cover}.jpg`;
+    : `/images/coverphoto/${cover}.png`;
 
   return (
     <div

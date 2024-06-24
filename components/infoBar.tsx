@@ -92,13 +92,18 @@ const InfoBar: FC<Props> = ({
         if (socialInputTypes[iconName] === 'link') {
           return window.open(title, '_self');
         }
-        if (iconName === 'Linked In') {
-          return window.open(`https://${link}/in/${title}`, '_self');
+        // if (iconName === 'Linked In') {
+        //   return window.open(`https://${link}/in/${title}`, '_self');
+        // }
+        // if (iconName === 'Snapchat') {
+        //   return window.open(`${link}/add/${title}`, '_self');
+        // }
+        // return window.open(`https://${link}/${title}`, '_self');
+        if (title.includes('https') || title.includes('http')) {
+          return window.open(title, '_self');
+        } else {
+          return window.open(`https://${link}/${title}`, '_self');
         }
-        if (iconName === 'Snapchat') {
-          return window.open(`${link}/add/${title}`, '_self');
-        }
-        return window.open(`https://${link}/${title}`, '_self');
       case 'Chat Links':
         if (iconName === 'Whatsapp') {
           return window.open(`https://wa.me/${title}?`, '_self');
@@ -129,6 +134,19 @@ const InfoBar: FC<Props> = ({
           iconName === 'ENS Message' ||
           iconName === 'Copy'
         ) {
+          navigator.clipboard.writeText(title);
+          toast({
+            title: 'Copied to clipboard',
+          });
+          break;
+        }
+        if (title.startsWith('www')) {
+          console.log('www');
+          return window.open(`https://${title}`, '_self');
+        }
+        return window.open(title, '_self');
+      case 'General Links':
+        if (iconName === 'Invoice' || iconName === 'Card Payment') {
           navigator.clipboard.writeText(title);
           toast({
             title: 'Copied to clipboard',

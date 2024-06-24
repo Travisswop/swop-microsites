@@ -90,13 +90,18 @@ const SocialLarge: FC<Props> = ({
         if (socialInputTypes[name] === 'link') {
           return window.open(value, '_self');
         }
-        if (name === 'Linked In') {
-          return window.open(`https://${url}/in/${value}`, '_self');
+        // if (name === 'Linked In') {
+        //   return window.open(`https://${url}/in/${value}`, '_self');
+        // }
+        // if (name === 'Snapchat') {
+        //   return window.open(`${url}/add/${value}`, '_self');
+        // }
+        // return window.open(`https://${url}/${value}`, '_blank');
+        if (value.includes('https') || value.includes('http')) {
+          return window.open(value, '_self');
+        } else {
+          return window.open(`https://${url}/${value}`, '_self');
         }
-        if (name === 'Snapchat') {
-          return window.open(`${url}/add/${value}`, '_self');
-        }
-        return window.open(`https://${url}/${value}`, '_self');
       case 'Chat Links':
         if (name === 'Whatsapp') {
           return window.open(`https://wa.me/${value}?`, '_self');
@@ -134,6 +139,15 @@ const SocialLarge: FC<Props> = ({
           break;
         }
         return window.open(value, '_self');
+      case 'General Links':
+        if (name === 'Invoice' || name === 'Card Payment') {
+          navigator.clipboard.writeText(value);
+          toast({
+            title: 'Copied to clipboard',
+          });
+          break;
+        }
+        return window.open(value, '_self');
       default:
         return window.open(value, '_self');
     }
@@ -142,6 +156,7 @@ const SocialLarge: FC<Props> = ({
   const delay = 0.5;
 
   const trimIcon = iconName.toLowerCase().trim().replace(' ', '');
+  console.log('🚀 ~ trimIcon:', trimIcon);
 
   return (
     <motion.div

@@ -87,14 +87,19 @@ const SocialSmall: FC<Props> = ({
         if (socialInputTypes[name] === 'link') {
           return window.open(value, '_self');
         }
-        if (name === 'Linked In') {
-          return window.open(`https://${url}/in/${value}`, '_self');
+        if (value.includes('https') || value.includes('http')) {
+          return window.open(value, '_self');
+        } else {
+          return window.open(`https://${url}/${value}`, '_self');
         }
-        if (name === 'Snapchat') {
-          return window.open(`${url}/add/${value}`, '_self');
-        }
-        return window.open(`https://${url}/${value}`, '_self');
-        break;
+      // if (name === 'Linked In') {
+      //   return window.open(`https://${url}/in/${value}`, '_self');
+      // }
+      // if (name === 'Snapchat') {
+      //   return window.open(`${url}/add/${value}`, '_self');
+      // }
+      // return window.open(`https://${url}/${value}`, '_self');
+      // break;
       case 'Commands':
         if (name === 'Email') {
           return window.open(`mailto:${value}`, '_self');

@@ -144,6 +144,9 @@ export default async function PublicProfile({ params }: PageProps) {
     );
   }
 
+  // console the last element of info.ensdomain
+  const ensDomain = info.ensDomain[info.ensDomain.length - 1];
+
   return (
     <>
       {theme && (
@@ -252,7 +255,7 @@ export default async function PublicProfile({ params }: PageProps) {
         )}
 
         {/* Ens Domain */}
-        {info?.ensDomain && info.ensDomain.length > 0 && (
+        {/* {info?.ensDomain && info.ensDomain.length > 0 && (
           <div className="w-full">
             {info.ensDomain.map((social: any, index: number) => (
               <Ens
@@ -263,6 +266,17 @@ export default async function PublicProfile({ params }: PageProps) {
                 parentId={parentId}
               />
             ))}
+          </div>
+        )} */}
+        {info?.ensDomain && info.ensDomain.length > 0 && (
+          <div className="w-full">
+            <Ens
+              number={0}
+              key={ensDomain._id}
+              data={ensDomain}
+              socialType="ens"
+              parentId={parentId}
+            />
           </div>
         )}
 

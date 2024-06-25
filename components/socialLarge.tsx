@@ -156,7 +156,6 @@ const SocialLarge: FC<Props> = ({
   const delay = 0.5;
 
   const trimIcon = iconName.toLowerCase().trim().replace(' ', '');
-  console.log('🚀 ~ trimIcon:', trimIcon);
 
   return (
     <motion.div

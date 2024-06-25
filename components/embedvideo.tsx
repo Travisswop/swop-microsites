@@ -30,7 +30,6 @@ const variants = {
 
 const EmbedVideo: FC<Props> = async ({ data, number }) => {
   const { type, videoUrl } = data;
-  console.log('data', data);
   let spotifyUrl;
 
   if (type === 'spotify') {
@@ -64,7 +63,7 @@ const EmbedVideo: FC<Props> = async ({ data, number }) => {
           damping: 10,
         }}
       >
-        {type === 'twitter' ? (
+        {type === 'twitter' || type === 'x' ? (
           // <div data-theme="light">
           //   <Tweet id={videoId} />
           // </div>
@@ -76,8 +75,10 @@ const EmbedVideo: FC<Props> = async ({ data, number }) => {
             <TikTokEmbed url={videoUrl} />
           </div>
         ) : type === 'youtube' ? (
-          <div className="w-full overflow-hidden flex flex-col bg-white justify-center rounded-lg shadow-2xl">
-            <YouTubeEmbed url={videoUrl} width="415" height="315" />
+          <div className="w-full max-w-full overflow-hidden flex flex-col bg-white justify-center rounded-lg shadow-2xl">
+            <div className="video-wrapper">
+              <YouTubeEmbed url={videoUrl} />
+            </div>
           </div>
         ) : type === 'spotify' ? (
           <div className="w-full overflow-hidden flex flex-col  justify-center shadow-2xl">
@@ -88,12 +89,14 @@ const EmbedVideo: FC<Props> = async ({ data, number }) => {
             ></iframe>
           </div>
         ) : (
-          <div className="w-full overflow-hidden flex flex-col bg-white justify-center rounded-md">
-            <div
-              dangerouslySetInnerHTML={{
-                __html: videoUrl,
-              }}
-            ></div>
+          <div className="w-full max-w-full overflow-hidden flex flex-col justify-center rounded-lg shadow-2xl">
+            <div className="video-wrapper">
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: videoUrl,
+                }}
+              ></div>
+            </div>
           </div>
         )}
       </motion.div>

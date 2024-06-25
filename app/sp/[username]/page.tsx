@@ -144,7 +144,6 @@ export default async function PublicProfile({ params }: PageProps) {
     );
   }
 
-  // console the last element of info.ensdomain
   const ensDomain = info.ensDomain[info.ensDomain.length - 1];
 
   return (

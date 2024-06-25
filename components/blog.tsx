@@ -3,7 +3,15 @@
 import { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
-import Link from 'next/link';
+import parse from 'html-react-parser';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from '@/components/ui/sheet';
 
 interface Props {
   data: {
@@ -63,33 +71,39 @@ const Blog: FC<Props> = ({ data, socialType, parentId, number }) => {
         type: 'easeInOut',
       }}
     >
-      <div className="w-full p-2 bg-white border rounded-lg shadow">
-        <div className="relative w-full h-40 mb-2 overflow-hidden rounded-lg ">
-          <Image
-            src={image}
-            alt={title}
-            fill
-            sizes="100vw"
-            style={{
-              objectFit: 'contain',
-            }}
-          />
+      <Sheet>
+        <SheetContent className="overflow-y-auto">
+          <SheetHeader>
+            <SheetTitle>{title}</SheetTitle>
+            <SheetDescription>{parse(description)}</SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+
+        <div className="w-full p-2 bg-white border rounded-lg shadow mt-4">
+          <div className="relative w-full h-40 mb-2 overflow-hidden rounded-lg ">
+            <Image
+              src={image}
+              alt={title}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: 'contain',
+              }}
+            />
+          </div>
+          <h5 className="text-xl font-bold text-gray-900 dark:text-white">
+            {title}
+          </h5>
+          <p className="mb-5 text-sm text-gray-500 dark:text-gray-400">
+            {headline}
+          </p>
+          <div className="flex items-end justify-end">
+            <SheetTrigger className="text-sm bg-slate-900 text-white rounded-full px-2 py-1">
+              Read More
+            </SheetTrigger>
+          </div>
         </div>
-        <h5 className="text-xl font-bold text-gray-900 dark:text-white">
-          {title}
-        </h5>
-        <p className="mb-5 text-sm text-gray-500 dark:text-gray-400">
-          {headline}
-        </p>
-        <div className="flex items-end justify-end">
-          <Link
-            href="#"
-            className="text-sm bg-slate-900 text-white rounded-full px-2 py-1"
-          >
-            Read More
-          </Link>
-        </div>
-      </div>
+      </Sheet>
     </motion.div>
   );
 };

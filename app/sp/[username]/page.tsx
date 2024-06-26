@@ -377,22 +377,20 @@ export default async function PublicProfile({ params }: PageProps) {
         </div>
       </main>
       <Toaster />
-      <Dialog open={gatedAccess && gatedInfo.error === false}>
-        <DialogContent>
-          <GatedAccess
-            data={{
-              contractAddress: gatedInfo.contractAddress,
-              eventLink: gatedInfo.eventLink,
-              network: gatedInfo.network,
-              tokenId: gatedInfo.tokenId,
-              title: gatedInfo.title,
-              description: gatedInfo.description,
-              image: gatedInfo.image,
-              openseaLink: gatedInfo.openseaLink,
-            }}
-          />
-        </DialogContent>
-      </Dialog>
+      <GatedAccess
+        data={{
+          contractAddress: gatedInfo.contractAddress,
+          eventLink: gatedInfo.eventLink,
+          network: gatedInfo.network,
+          tokenId: gatedInfo.tokenId,
+          title: gatedInfo.title,
+          description: gatedInfo.description,
+          image: gatedInfo.image,
+          openseaLink: gatedInfo.openseaLink,
+        }}
+        gatedAccess={gatedAccess}
+        gatedInfo={gatedInfo}
+      />
     </>
   );
 }

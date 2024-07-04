@@ -1,14 +1,13 @@
 'use client';
 
 import { FC } from 'react';
-import Image from 'next/image';
 import { motion } from 'framer-motion';
-import { Tweet } from 'react-tweet';
 import {
   TikTokEmbed,
   XEmbed,
   YouTubeEmbed,
 } from 'react-social-media-embed';
+import VideoContainer from './videoContainer';
 
 interface Props {
   data: {
@@ -28,19 +27,33 @@ const variants = {
   exit: { opacity: 0, x: -0, y: 25 },
 };
 
+const checkValidUrl = (url: string) => {
+  try {
+    new URL(url);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 const EmbedVideo: FC<Props> = async ({ data, number }) => {
   const { type, videoUrl } = data;
+  const isValidUrl = checkValidUrl(videoUrl);
   let spotifyUrl;
 
   if (type === 'spotify') {
-    const url = new URL(videoUrl);
-    // https://open.spotify.com/playlist/37i9dQZF1DWUACcBjzMiIY?si=DP--7-zwR3CfUURp-xEnuA
-    // Remove any additional path segments
-    url.pathname = url.pathname.replace(/\/intl-\w+\//, '/');
-    // Replace with embed URL
-    spotifyUrl = url
-      .toString()
-      .replace('open.spotify.com', 'open.spotify.com/embed');
+    try {
+      const url = new URL(videoUrl);
+      // https://open.spotify.com/playlist/37i9dQZF1DWUACcBjzMiIY?si=DP--7-zwR3CfUURp-xEnuA
+      // Remove any additional path segments
+      url.pathname = url.pathname.replace(/\/intl-\w+\//, '/');
+      // Replace with embed URL
+      spotifyUrl = url
+        .toString()
+        .replace('open.spotify.com', 'open.spotify.com/embed');
+    } catch (error) {
+      spotifyUrl = null;
+    }
   }
 
   return (
@@ -64,40 +77,45 @@ const EmbedVideo: FC<Props> = async ({ data, number }) => {
         }}
       >
         {type === 'twitter' || type === 'x' ? (
-          // <div data-theme="light">
-          //   <Tweet id={videoId} />
-          // </div>
-          <div style={{}}>
-            <XEmbed url={videoUrl} />
+          <div>
+            {isValidUrl ? (
+              <XEmbed url={videoUrl} />
+            ) : (
+              <VideoContainer videoUrl={videoUrl} />
+            )}
           </div>
         ) : type === 'tiktok' ? (
-          <div style={{}}>
-            <TikTokEmbed url={videoUrl} />
+          <div>
+            {isValidUrl ? (
+              <TikTokEmbed url={videoUrl} />
+            ) : (
+              <VideoContainer videoUrl={videoUrl} />
+            )}
           </div>
         ) : type === 'youtube' ? (
           <div className="w-full max-w-full overflow-hidden flex flex-col bg-white justify-center rounded-lg shadow-2xl">
             <div className="video-wrapper">
-              <YouTubeEmbed url={videoUrl} />
+              {isValidUrl ? (
+                <YouTubeEmbed url={videoUrl} />
+              ) : (
+                <VideoContainer videoUrl={videoUrl} />
+              )}
             </div>
           </div>
         ) : type === 'spotify' ? (
           <div className="w-full overflow-hidden flex flex-col  justify-center shadow-2xl">
-            <iframe
-              src={spotifyUrl}
-              height={400}
-              allow="encrypted-media"
-            ></iframe>
+            {spotifyUrl ? (
+              <iframe
+                src={spotifyUrl}
+                height={400}
+                allow="encrypted-media"
+              ></iframe>
+            ) : (
+              <VideoContainer videoUrl={videoUrl} />
+            )}
           </div>
         ) : (
-          <div className="w-full max-w-full overflow-hidden flex flex-col justify-center rounded-lg shadow-2xl">
-            <div className="video-wrapper">
-              <div
-                dangerouslySetInnerHTML={{
-                  __html: videoUrl,
-                }}
-              ></div>
-            </div>
-          </div>
+          <VideoContainer videoUrl={videoUrl} />
         )}
       </motion.div>
     </motion.div>

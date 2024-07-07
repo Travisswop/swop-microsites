@@ -95,7 +95,7 @@ const Contact: FC<Props> = ({
       >
         <div>
           <Image
-            className="object-fill w-16 h-16  rounded-[12px]"
+            className="object-fill w-14 h-14"
             src="/images/outline-icons/contact.svg"
             alt={name}
             width={80}

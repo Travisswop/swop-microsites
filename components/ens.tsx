@@ -76,7 +76,7 @@ const Ens: FC<Props> = ({ data, socialType, parentId, number }) => {
       >
         <div>
           <Image
-            className="object-fill w-16 h-16 rounded-[12px]"
+            className="object-fill w-14 h-14"
             src="/images/outline-icons/ethereum.svg"
             alt={domain}
             width={80}

@@ -135,6 +135,8 @@ export default async function PublicProfile({ params }: PageProps) {
     ens: string;
   } = data;
 
+  console.log('data', data.info.ensDomain);
+
   if (!gatedAccess && direct) {
     return (
       <>
@@ -180,7 +182,7 @@ export default async function PublicProfile({ params }: PageProps) {
         {info?.socialTop && info.socialTop.length > 0 && (
           <div
             className="flex flex-row flex-wrap justify-center
-           gap-8 px-6 py-2"
+           gap-6 px-6 py-4"
           >
             {info.socialTop.map((social: any, index: number) => (
               <SocialSmall
@@ -210,7 +212,7 @@ export default async function PublicProfile({ params }: PageProps) {
         )}
         {/* Social Media Big */}
         {info?.socialLarge && info.socialLarge.length > 0 && (
-          <div className="flex flex-row flex-wrap justify-evenly gap-4 sm:gap-10 my-8">
+          <div className="flex flex-row flex-wrap justify-evenly gap-4 sm:gap-10 my-4">
             {info.socialLarge.map((social: any, index: number) => (
               <SocialLarge
                 number={index}
@@ -223,6 +225,21 @@ export default async function PublicProfile({ params }: PageProps) {
           </div>
         )}
 
+        <div className="mt-4"></div>
+
+        {/* Message */}
+        {/* ENS */}
+        {info?.ensDomain && info.ensDomain.length > 0 && (
+          <div className="w-full">
+            <Message
+              number={0}
+              key={ensDomain._id}
+              data={ensDomain}
+              socialType="ens"
+              parentId={parentId}
+            />
+          </div>
+        )}
         {/* Redeem Link */}
         {info?.redeemLink && info.redeemLink.length > 0 && (
           <div className="w-full">
@@ -253,20 +270,7 @@ export default async function PublicProfile({ params }: PageProps) {
           </div>
         )}
 
-        {/* Ens Domain */}
-        {/* {info?.ensDomain && info.ensDomain.length > 0 && (
-          <div className="w-full">
-            {info.ensDomain.map((social: any, index: number) => (
-              <Ens
-                number={index}
-                key={social._id}
-                data={social}
-                socialType="ens"
-                parentId={parentId}
-              />
-            ))}
-          </div>
-        )} */}
+        {/* ENS */}
         {info?.ensDomain && info.ensDomain.length > 0 && (
           <div className="w-full">
             <Ens

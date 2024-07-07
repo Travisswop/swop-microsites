@@ -29,7 +29,9 @@ const Bio: FC<Props> = ({ name, bio }) => {
       <h1 className="text-xl sm:text-2xl font-bold text-center">
         {name}
       </h1>
-      <div className="text-sm sm:text-md text-center">{bio}</div>
+      <div className="text-sm sm:text-md text-center text-slate-600">
+        {bio}
+      </div>
     </motion.div>
   );
 };

@@ -187,7 +187,7 @@ const InfoBar: FC<Props> = ({
       >
         <div>
           <Image
-            className="object-fill w-16 h-16 rounded-[12px]"
+            className="object-fill w-14 h-14"
             src={
               iconPath
                 ? iconPath
@@ -199,7 +199,7 @@ const InfoBar: FC<Props> = ({
             priority
           />
         </div>
-        <div className="max-w-xs overflow-hidden">
+        <div className="max-w-xs overflow-hidden ml-2">
           <div className="text-md font-semibold">{buttonName}</div>
           <div className="text-xs">{description}</div>
         </div>

@@ -4,6 +4,19 @@ import { FC } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
+import { redirect } from 'next/navigation';
+
 interface Props {
   data: {
     _id: string;
@@ -29,27 +42,12 @@ const Message: FC<Props> = ({
 }) => {
   const { _id, domain } = data;
 
-  const openlink = async () => {
-    try {
-      await fetch('https://app.apiswop.co/web/updateCount', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          socialType,
-          socialId: _id,
-          parentId,
-        }),
-      });
-    } catch (err) {
-      console.log(err);
-    }
-    return;
-  };
-
   const delay = number + 0.1;
+
+  const redirectToSwop = () => {
+    console.log('redirecting to swop');
+    return window.open('https://swopme.co', '_blank');
+  };
 
   return (
     <motion.div
@@ -70,25 +68,46 @@ const Message: FC<Props> = ({
           stiffness: 400,
           damping: 10,
         }}
-        onClick={openlink}
-        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-xl p-2 rounded-[12px]"
+        className="my-2 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-xl p-2 rounded-[12px]"
       >
-        <div>
-          <Image
-            className="object-fill w-16 h-16 rounded-[12px]"
-            src="/images/outline-icons/message.svg"
-            alt={domain}
-            width={80}
-            height={80}
-            priority
-          />
-        </div>
-        <div className="max-w-xs overflow-hidden">
-          <div className="text-md font-semibold">Message Me</div>
-          <div className="text-xs">
-            Message me using the swop wallet
-          </div>
-        </div>
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <div className="flex relative cursor-pointer">
+              <div>
+                <Image
+                  className="object-fill w-14 h-14"
+                  src="/images/outline-icons/message.svg"
+                  alt={domain}
+                  width={80}
+                  height={80}
+                  priority
+                />
+              </div>
+              <div className="max-w-xs overflow-hidden ml-2">
+                <div className="text-md font-semibold">
+                  Message Me
+                </div>
+                <div className="text-xs">
+                  Message me using the swop wallet
+                </div>
+              </div>
+            </div>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogDescription>
+                You need to download the Swop app to message. Do you
+                want to download the app?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction onClick={redirectToSwop}>
+                Download App
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </motion.div>
     </motion.div>
   );

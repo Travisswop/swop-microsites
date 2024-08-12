@@ -131,75 +131,77 @@ const openLink = async (
     console.log(err);
   }
 
-  switch (group) {
-    case 'Social Media':
-      if (socialInputTypes[name] === 'link') {
-        return window.open(value, '_self');
-      }
-      if (name === 'Linked In') {
-        return window.open(`https://${url}/in/${value}`, '_self');
-      }
-      if (name === 'Snapchat') {
-        return window.open(`${url}/add/${value}`, '_self');
-      }
-      return window.open(`https://${url}/${value}`, '_self');
-    case 'Chat Links':
-      if (name === 'Whatsapp') {
-        return window.open(`https://wa.me/${value}?`, '_self');
-      }
-      if (name === 'Telegram') {
-        return window.open(`https://t.me/${value}?`, '_self');
-      }
-      return window.open(`${value}`, '_self');
-    case 'Copy Address':
-      navigator.clipboard.writeText(value);
-      toast({
-        title: 'Copied to clipboard',
-      });
-      break;
-    case 'Command/Action':
-      if (name === 'Email') {
-        return window.open(`mailto:${value}`, '_self');
-      }
-      if (name === 'Call') {
-        return window.open(`tel:${value}`, '_self');
-      }
-      if (name === 'Text Message') {
-        return window.open(`sms:${value}`, '_self');
-      }
+  if (typeof window !== 'undefined') {
+    switch (group) {
+      case 'Social Media':
+        if (socialInputTypes[name] === 'link') {
+          return window.open(value, '_self');
+        }
+        if (name === 'Linked In') {
+          return window.open(`https://${url}/in/${value}`, '_self');
+        }
+        if (name === 'Snapchat') {
+          return window.open(`${url}/add/${value}`, '_self');
+        }
+        return window.open(`https://${url}/${value}`, '_self');
+      case 'Chat Links':
+        if (name === 'Whatsapp') {
+          return window.open(`https://wa.me/${value}?`, '_self');
+        }
+        if (name === 'Telegram') {
+          return window.open(`https://t.me/${value}?`, '_self');
+        }
+        return window.open(`${value}`, '_self');
+      case 'Copy Address':
+        navigator.clipboard.writeText(value);
+        toast({
+          title: 'Copied to clipboard',
+        });
+        break;
+      case 'Command/Action':
+        if (name === 'Email') {
+          return window.open(`mailto:${value}`, '_self');
+        }
+        if (name === 'Call') {
+          return window.open(`tel:${value}`, '_self');
+        }
+        if (name === 'Text Message') {
+          return window.open(`sms:${value}`, '_self');
+        }
 
-      if (
-        name === 'Send Crypto' ||
-        name === 'ENS Message' ||
-        name === 'Copy'
-      ) {
-        navigator.clipboard.writeText(value);
-        toast({
-          title: 'Copied to clipboard',
-        });
-        break;
-      }
-      return window.open(value, '_self');
-    case 'Commands':
-      if (name === 'Email') {
-        return window.open(`mailto:${value}`, '_self');
-      }
-      if (name === 'Call') {
-        return window.open(`tel:${value}`, '_self');
-      }
-      if (name === 'Text Message') {
-        return window.open(`sms:${value}`, '_self');
-      }
-      if (name === 'Copy') {
-        navigator.clipboard.writeText(value);
-        toast({
-          title: 'Copied to clipboard',
-        });
-        break;
-      }
-      return window.open(value, '_self');
-    default:
-      return window.open(value, '_self');
+        if (
+          name === 'Send Crypto' ||
+          name === 'ENS Message' ||
+          name === 'Copy'
+        ) {
+          navigator.clipboard.writeText(value);
+          toast({
+            title: 'Copied to clipboard',
+          });
+          break;
+        }
+        return window.open(value, '_self');
+      case 'Commands':
+        if (name === 'Email') {
+          return window.open(`mailto:${value}`, '_self');
+        }
+        if (name === 'Call') {
+          return window.open(`tel:${value}`, '_self');
+        }
+        if (name === 'Text Message') {
+          return window.open(`sms:${value}`, '_self');
+        }
+        if (name === 'Copy') {
+          navigator.clipboard.writeText(value);
+          toast({
+            title: 'Copied to clipboard',
+          });
+          break;
+        }
+        return window.open(value, '_self');
+      default:
+        return window.open(value, '_self');
+    }
   }
 };
 

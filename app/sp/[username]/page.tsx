@@ -5,7 +5,7 @@ import GatedAccess from '@/components/gatedAccess';
 import Header from '@/components/header';
 import InfoBar from '@/components/infoBar';
 import PaymentBar from '@/components/paymentBar';
-import Redirect from '@/components/redirect';
+// import Redirect from '@/components/redirect';
 import SocialLarge from '@/components/socialLarge';
 import SocialSmall from '@/components/socialSmall';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -23,6 +23,7 @@ import MP3 from '@/components/mp3';
 import Referral from '@/components/referral';
 import Redeem from '@/components/redeem';
 import EmbedVideo from '@/components/embedvideo';
+import dynamic from 'next/dynamic';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -99,6 +100,8 @@ export async function generateMetadata({
     },
   };
 }
+
+const Redirect = dynamic(() => import('@/components/redirect'));
 
 export default async function PublicProfile({ params }: PageProps) {
   // await wait(10000);

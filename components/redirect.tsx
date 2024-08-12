@@ -111,7 +111,6 @@ const openLink = async (
 ) => {
   let { _id, group, name, value, url, link, title, iconName } =
     social;
-  console.log('social', social);
   url = url || link;
   value = value || title;
   name = name || iconName;

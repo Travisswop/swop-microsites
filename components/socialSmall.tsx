@@ -107,6 +107,7 @@ const SocialSmall: FC<Props> = ({
         return window.open(value, '_self');
         break;
       case 'Chat Links':
+        console.log('value', value);
         if (name === 'Whatsapp') {
           return window.open(`https://wa.me/${value}?`, '_self');
         }

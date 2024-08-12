@@ -135,7 +135,7 @@ export default async function PublicProfile({ params }: PageProps) {
     ens: string;
   } = data;
 
-  console.log('data', data.info.ensDomain);
+  console.log('data', typeof window);
 
   if (!gatedAccess && direct) {
     return (

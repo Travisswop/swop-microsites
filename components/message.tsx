@@ -62,13 +62,12 @@ const Message: FC<Props> = ({
       }}
     >
       <motion.div
-        whileHover={{ scale: 1.05 }}
         transition={{
           type: 'spring',
           stiffness: 400,
           damping: 10,
         }}
-        className="my-2 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-xl p-2 rounded-[12px]"
+        className="my-1.5 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-xl p-2 rounded-[12px]"
       >
         <AlertDialog>
           <AlertDialogTrigger asChild>

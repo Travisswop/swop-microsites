@@ -66,10 +66,9 @@ const EmbedVideo: FC<Props> = async ({ data, number }) => {
         duration: 0.4,
         type: 'easeInOut',
       }}
-      className="mt-3"
+      className="my-2"
     >
       <motion.div
-        whileHover={{ scale: 1.01 }}
         transition={{
           type: 'spring',
           stiffness: 400,

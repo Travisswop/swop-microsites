@@ -74,7 +74,6 @@ const Referral: FC<Props> = ({
       className="w-full"
     >
       <motion.div
-        whileHover={{ scale: 1.05 }}
         transition={{
           type: 'spring',
           stiffness: 400,

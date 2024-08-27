@@ -75,14 +75,13 @@ const PaymentBar: FC<Props> = ({
       }}
     >
       <motion.div
-        whileHover={{ scale: 1.05 }}
         transition={{
           type: 'spring',
           stiffness: 400,
           damping: 10,
         }}
         onClick={() => openlink()}
-        className="my-3 flex justify-between items-center cursor-pointer bg-white shadow-2xl p-2 rounded-[12px]"
+        className="my-1.5 flex justify-between items-center cursor-pointer bg-white shadow-2xl p-2 rounded-[12px]"
       >
         <div className="flex flex-row gap-2 items-center ">
           <div>

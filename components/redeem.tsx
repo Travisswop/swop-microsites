@@ -85,14 +85,13 @@ const Redeem: FC<Props> = ({
       className="w-full"
     >
       <motion.div
-        whileHover={{ scale: 1.05 }}
         transition={{
           type: 'spring',
           stiffness: 400,
           damping: 10,
         }}
         onClick={openlink}
-        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-3 rounded-[12px] relative"
+        className="my-1 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-3 rounded-[12px] relative"
       >
         <div>
           <Image

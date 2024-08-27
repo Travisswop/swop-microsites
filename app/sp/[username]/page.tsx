@@ -138,8 +138,6 @@ export default async function PublicProfile({ params }: PageProps) {
     ens: string;
   } = data;
 
-  console.log('data', typeof window);
-
   if (!gatedAccess && direct) {
     return (
       <>
@@ -333,7 +331,7 @@ export default async function PublicProfile({ params }: PageProps) {
 
         {/* Audio */}
         {info?.audio && info.audio.length > 0 && (
-          <div className="w-full">
+          <div className="w-full mt-1">
             {info.audio.map((social: any, index: number) => (
               <MP3
                 number={index}
@@ -341,6 +339,7 @@ export default async function PublicProfile({ params }: PageProps) {
                 data={social}
                 socialType="audio"
                 parentId={parentId}
+                length={info.audio.length}
               />
             ))}
           </div>
@@ -350,7 +349,7 @@ export default async function PublicProfile({ params }: PageProps) {
         {info?.video && info.video.length > 0 && (
           <div className="w-full">
             {info.video.map((social: any, index: number) => (
-              <div key={index} className="mt-5">
+              <div key={index} className="my-2">
                 <video
                   className="w-full h-76 max-w-full border border-gray-200 rounded-lg dark:border-gray-700"
                   controls

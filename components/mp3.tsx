@@ -15,6 +15,7 @@ interface Props {
   socialType: string;
   parentId: string;
   number: number;
+  length: number;
 }
 
 const variants = {
@@ -23,7 +24,13 @@ const variants = {
   exit: { opacity: 0, x: -0, y: 25 },
 };
 
-const MP3: FC<Props> = ({ data, socialType, parentId, number }) => {
+const MP3: FC<Props> = ({
+  data,
+  socialType,
+  parentId,
+  number,
+  length,
+}) => {
   const { name, coverPhoto, fileUrl } = data;
 
   const delay = number + 0.1;
@@ -41,13 +48,14 @@ const MP3: FC<Props> = ({ data, socialType, parentId, number }) => {
       }}
     >
       <motion.div
-        whileHover={{ scale: 1.05 }}
         transition={{
           type: 'spring',
           stiffness: 400,
           damping: 10,
         }}
-        className="my-3 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-2 rounded-[12px]"
+        className={`${
+          number === length - 1 ? 'mb-0' : 'mb-2'
+        } flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-2 rounded-[12px]`}
       >
         <div>
           <Image
@@ -60,7 +68,6 @@ const MP3: FC<Props> = ({ data, socialType, parentId, number }) => {
           />
         </div>
         <div className="max-w-xs overflow-hidden">
-          <div className="text-sm font-semibold">{name}</div>
           <figure>
             <audio controls>
               <source src={fileUrl} type="audio/mpeg" />

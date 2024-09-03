@@ -140,7 +140,7 @@ const InfoBar: FC<Props> = ({
           });
           break;
         }
-        if (title.startsWith('www')) {
+        if (title.toLowerCase().startsWith('www')) {
           console.log('www');
           return window.open(`https://${title}`, '_self');
         }

@@ -90,9 +90,9 @@ const SocialLarge: FC<Props> = ({
         if (socialInputTypes[name] === 'link') {
           return window.open(value, '_self');
         }
-        // if (name === 'Linked In') {
-        //   return window.open(`https://${url}/in/${value}`, '_self');
-        // }
+        if (name === 'Linked In') {
+          return window.open(`https://${url}/in/${value}`, '_self');
+        }
         // if (name === 'Snapchat') {
         //   return window.open(`${url}/add/${value}`, '_self');
         // }

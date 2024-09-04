@@ -8,6 +8,7 @@ const nextConfig = {
     domains: [
       'res.cloudinary.com',
       'ipfs.io',
+      'i.imghippo.com',
       '104.248.234.73',
       'nft-cdn.alchemy.com',
       'cloudinary.com',

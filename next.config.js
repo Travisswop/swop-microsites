@@ -16,6 +16,7 @@ const nextConfig = {
       'cdn.coinranking.com',
       'dev.apiswop.co',
       'app.apiswop.co',
+      'dingo-divine-unlikely.ngrok-free.app',
     ],
   },
 };

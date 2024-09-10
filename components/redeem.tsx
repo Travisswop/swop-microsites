@@ -1,8 +1,9 @@
 'use client';
 
-import { FC } from 'react';
+import { FC, useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import { useToast } from './ui/use-toast';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 interface Props {
@@ -18,6 +19,7 @@ interface Props {
     amount: number;
     symbol: string;
     description: string;
+    evmLink: string[];
   };
   socialType: string;
   parentId: string;
@@ -38,36 +40,70 @@ const Redeem: FC<Props> = ({
 }) => {
   const {
     _id,
-    micrositeId,
     network,
     link,
     description,
     imageUrl,
     tokenUrl,
     mintName,
-    mintLimit,
-    amount,
+    evmLink,
   } = data;
 
-  const openlink = async () => {
+  const [availableLinks, setAvailableLinks] = useState<string[]>([]);
+  const { toast } = useToast();
+
+  const updateCount = useCallback(async () => {
     try {
-      fetch(`${API_URL}/web/updateCount`, {
+      await fetch(`${API_URL}/web/updateCount`, {
         method: 'POST',
         headers: {
-          Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          socialType,
-          socialId: _id,
-          parentId,
-        }),
+        body: JSON.stringify({ socialType, socialId: _id, parentId }),
       });
     } catch (err) {
-      console.log(err);
+      console.error('Error updating count:', err);
     }
-    return window.open(link, '_self');
-  };
+  }, [socialType, _id, parentId]);
+
+  const openLink = useCallback(() => {
+    updateCount();
+    if (network.toLowerCase() === 'solana') {
+      window.open(link, '_self');
+    } else if (availableLinks.length > 0) {
+      window.open(availableLinks[0], '_self');
+    } else {
+      toast({ title: 'All links are redeemed' });
+    }
+  }, [network, link, availableLinks, updateCount, toast]);
+
+  useEffect(() => {
+    if (network.toLowerCase() !== 'solana') {
+      const fetchValidLinks = async () => {
+        const validLinks = await Promise.all(
+          evmLink.map(async (item: any) => {
+            if (item.isClaimed) {
+              return null;
+            }
+            const response = await fetch(
+              `${API_URL}/api/v4/microsite/isRedeemLinkValid`,
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ link: item.link, id: _id }),
+              }
+            );
+            const { data } = await response.json();
+            return data ? null : item.link;
+          })
+        );
+        setAvailableLinks(
+          validLinks.filter((link) => typeof link === 'string')
+        );
+      };
+      fetchValidLinks();
+    }
+  }, [network, evmLink, _id]);
 
   const delay = number + 0.1;
 
@@ -90,7 +126,7 @@ const Redeem: FC<Props> = ({
           stiffness: 400,
           damping: 10,
         }}
-        onClick={openlink}
+        onClick={openLink}
         className="my-1 flex flex-row gap-2 items-center cursor-pointer bg-white shadow-2xl p-3 rounded-[12px] relative"
       >
         <div>
@@ -104,8 +140,13 @@ const Redeem: FC<Props> = ({
           />
         </div>
         <div className="max-w-xs overflow-hidden">
-          <div className="text-md font-semibold">{mintName}</div>
-          <div className="text-xs">{description}</div>
+          <h4 className="text-md font-semibold">{mintName}</h4>
+          <p className="text-xs ">{description}</p>
+          {network.toLowerCase() !== 'solana' && (
+            <span className="text-xs font-bold">
+              {availableLinks.length} Available
+            </span>
+          )}
         </div>
         <div className="absolute right-2 bottom-2">
           <Image src={tokenUrl} alt="redeem" width={18} height={18} />

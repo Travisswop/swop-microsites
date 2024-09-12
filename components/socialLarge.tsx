@@ -182,8 +182,8 @@ const SocialLarge: FC<Props> = ({
         <Image
           className="object-fill w-24 h-24 sm:w-28 sm:h-28 rounded-[30px] bg-transparent shadow-lg "
           src={
-            iconPath
-              ? iconPath
+            iconName.includes('http')
+              ? iconName
               : `/images/social_logo/${trimIcon}.svg`
           }
           alt={iconName}

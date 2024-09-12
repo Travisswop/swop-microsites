@@ -188,8 +188,8 @@ const InfoBar: FC<Props> = ({
           <Image
             className="object-fill w-14 h-14"
             src={
-              iconPath
-                ? iconPath
+              iconName.includes('http')
+                ? iconName
                 : `/images/social_logo/${trimIcon}.svg`
             }
             alt={iconName}

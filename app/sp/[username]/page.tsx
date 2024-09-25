@@ -149,14 +149,19 @@ export default async function PublicProfile({ params }: PageProps) {
 
   const ensDomain = info.ensDomain[info.ensDomain.length - 1];
 
+  const bg =
+    typeof backgroundImg === 'string' &&
+    backgroundImg.startsWith('https')
+      ? backgroundImg
+      : background[backgroundImg as keyof typeof background];
+
   return (
     <>
       {theme && (
         <div className={styles.bgWrap}>
           <Image
             alt="Mountains"
-            src={background[backgroundImg as keyof typeof background]}
-            placeholder="blur"
+            src={bg}
             quality={100}
             fill
             sizes="100vw"

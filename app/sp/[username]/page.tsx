@@ -100,7 +100,7 @@ export async function generateMetadata({
     },
   };
 }
-
+// comment
 const Redirect = dynamic(() => import('@/components/redirect'));
 
 export default async function PublicProfile({ params }: PageProps) {

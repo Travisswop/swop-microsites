@@ -24,7 +24,7 @@ async function getUserData(username: string) {
 
 export default async function PublicProfile({ params }: PageProps) {
   const { data, error } = await getUserData(params.username);
-
+  console.log('data', data);
   if (!data || !data.web3enabled) {
     return <Custom404 />;
   }

@@ -18,7 +18,6 @@ async function getUserData(username: string) {
     }
   );
   const data = await res.json();
-  console.log('🚀 ~ getUserData ~ data:', data);
   return data;
 }
 

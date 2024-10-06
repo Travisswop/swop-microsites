@@ -14,7 +14,7 @@ async function getUserData(username: string) {
   const res = await fetch(
     `${API_URL}/api/v2/web/microsite/${username}.swop.id`,
     {
-      next: { revalidate: 3600 },
+      next: { revalidate: 0 },
     }
   );
   const data = await res.json();

@@ -18,6 +18,11 @@ export const metadata = {
     'Swop nfc card',
     'Swop microsites',
     'NFC with microsites',
+    'Swop web3 wallet',
+    'Ethereum wallet',
+    'ENS',
+    'Solana',
+    'Polygon',
   ],
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: 'white' },
@@ -34,6 +39,25 @@ export const metadata = {
     type: 'website',
     locale: 'en_US',
     image: '/images/android-chrome-192x192.png',
+  },
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    type: 'website',
+    images: [
+      {
+        url: '/images/android-chrome-192x192.png',
+        width: 192,
+        height: 192,
+        alt: siteConfig.name,
+      },
+      {
+        url: '/images/android-chrome-512x512.png',
+        width: 512,
+        height: 512,
+        alt: siteConfig.name,
+      },
+    ],
   },
   assetlinks: '/.well-known/assetlinks.json',
   appleAppSiteAssociation: '/.well-known/apple-app-site-association',

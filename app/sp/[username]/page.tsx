@@ -8,7 +8,7 @@ const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
 type Props = {
   params: { username: string };
-  searchParams: { [key: string]: string | string[] };
+  searchParams: { [key: string]: string | string[] | undefined };
 };
 
 export async function generateMetadata(
@@ -25,8 +25,10 @@ export async function generateMetadata(
       ? profilePic
       : `/images/avatar/${profilePic}.png`;
 
-    return {
-      title: name,
+    const metadata: Metadata = {
+      title: {
+        absolute: name, // Use absolute to override any parent titles
+      },
       description: bio,
       icons: {
         icon: shortcutIcon,
@@ -46,7 +48,8 @@ export async function generateMetadata(
         title: name,
         description: bio,
         url: `${APP_URL}/sp/${username}`,
-        type: 'website',
+        siteName: 'Swop',
+        type: 'profile',
         images: [
           {
             url: shortcutIcon,
@@ -56,7 +59,15 @@ export async function generateMetadata(
           },
         ],
       },
+      twitter: {
+        card: 'summary',
+        title: name,
+        description: bio,
+        images: [shortcutIcon],
+      },
     };
+
+    return metadata;
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {};

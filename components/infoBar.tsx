@@ -67,8 +67,6 @@ const InfoBar: FC<Props> = ({
     group,
   } = data;
 
-  console.log('data', data);
-
   const { toast } = useToast();
 
   const openlink = async () => {

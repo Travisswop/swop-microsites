@@ -3,6 +3,7 @@ import ClientProfile from './ClientProfile';
 import Custom404 from './404';
 import { Metadata, ResolvingMetadata } from 'next';
 import { redirect } from 'next/navigation';
+import { addSwopPoint } from '@/app/actions/addPoint';
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL;
 
@@ -81,6 +82,11 @@ export default async function PublicProfile({
 }) {
   try {
     const result = await getUserData(params.username);
+    addSwopPoint({
+      userId: result.data.parentId,
+      pointType: 'Generating Traffic to Your SmartSite',
+      actionKey: 'launch-swop',
+    });
 
     // If no redirect is needed, render the ClientProfile
     return <ClientProfile initialData={result} />;

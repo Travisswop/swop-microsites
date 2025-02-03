@@ -4,6 +4,7 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useToast } from './ui/use-toast';
+import { addSwopPoint } from '@/app/actions/addPoint';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 interface Props {
@@ -54,7 +55,7 @@ const Redeem: FC<Props> = ({
 
   const updateCount = useCallback(async () => {
     try {
-      await fetch(`${API_URL}/web/updateCount`, {
+      fetch(`${API_URL}/api/v1/web/updateCount`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

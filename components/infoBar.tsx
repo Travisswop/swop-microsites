@@ -71,7 +71,7 @@ const InfoBar: FC<Props> = ({
 
   const openlink = async () => {
     try {
-      fetch(`${API_URL}/web/updateCount`, {
+      fetch(`${API_URL}/api/v1/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

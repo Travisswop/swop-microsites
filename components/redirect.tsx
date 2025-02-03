@@ -211,7 +211,7 @@ const download = async (
   socialType: string
 ) => {
   try {
-    await fetch('https://app.apiswop.co/web/updateCount', {
+    fetch(`${API_URL}/api/v1/web/updateCount`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

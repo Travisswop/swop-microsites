@@ -38,7 +38,7 @@ const download = async (data: any, parentId: string) => {
   document.body.removeChild(a);
 
   try {
-    await fetch(`${API_URL}/web/updateCount`, {
+    fetch(`${API_URL}/api/v1/web/updateCount`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',

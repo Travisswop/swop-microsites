@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { ToastAction } from '@/components/ui/toast';
 import { useToast } from '@/components/ui/use-toast';
 import { motion, Variants } from 'framer-motion';
+import { addSwopPoint } from '@/app/actions/addPoint';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -66,7 +67,7 @@ const SocialSmall: FC<Props> = ({
 
   const openlink = async () => {
     try {
-      fetch(`${API_URL}/web/updateCount`, {
+      fetch(`${API_URL}/api/v1/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

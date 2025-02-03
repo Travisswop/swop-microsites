@@ -40,7 +40,7 @@ const Referral: FC<Props> = ({
       title: 'Copied to clipboard',
     });
     try {
-      await fetch(`${API_URL}/web/updateCount`, {
+      fetch(`${API_URL}/api/v1/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

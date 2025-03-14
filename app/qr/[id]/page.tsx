@@ -4,8 +4,9 @@ export default async function QR({
 }: {
   params: { id: string };
 }) {
+
   const fetchData = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/web/qr/${params.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/web/qr/${params.id}`,
     { next: { revalidate: 1 } }
   );
   const data = await fetchData.json();

@@ -32,14 +32,14 @@ const variants = {
   enter: { opacity: 1, x: 0, y: 0 },
   exit: { opacity: 0, x: -0, y: 25 },
 };
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 const Blog: FC<Props> = ({ data, socialType, parentId, number }) => {
   const { _id, micrositeId, title, headline, description, image } =
     data;
 
   const openlink = async () => {
     try {
-      await fetch('https://app.apiswop.co/web/updateCount', {
+      fetch(`${API_URL}/api/v1/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',

@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { addSwopPoint } from '@/app/actions/addPoint';
 const wait = () =>
   new Promise((resolve) => setTimeout(resolve, 2500));
 interface Props {
@@ -66,6 +67,11 @@ const Connect: FC<Props> = ({ data, handler }) => {
     const res = await response.json();
 
     if (res.state === 'success') {
+      addSwopPoint({
+        userId: data.parentId,
+        pointType: 'Gaining a Follower',
+        actionKey: 'launch-swop',
+      });
       setLoader(false);
       setSuccess(true);
       wait().then(() => handler(true));

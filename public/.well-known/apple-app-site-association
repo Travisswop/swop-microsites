@@ -7,5 +7,8 @@
                 "paths": [ "*" ]
             }
         ]
-    }
+    },
+    "webcredentials": {
+        "apps": ["4NLANVU2F2.com.travisheron.swop"]
+      }
 }

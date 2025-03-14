@@ -33,7 +33,7 @@ const Ens: FC<Props> = ({ data, socialType, parentId, number }) => {
       title: 'Copied to clipboard',
     });
     try {
-      await fetch(`${API_URL}/web/updateCount`, {
+      fetch(`${API_URL}/api/v1/web/updateCount`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
